@@ -14,7 +14,13 @@ function App() {
       <Header />
       <Route path="/"></Route>
       <Search />
-      <AddRecommendation props={{ title: "Night", searchType: "book" }} />
+      <AddRecommendation
+        props={{
+          title: "Night",
+          searchType: "book",
+          creator: "Roman Polanski",
+        }}
+      />
     </Router>
   );
 }
