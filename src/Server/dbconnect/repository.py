@@ -1,9 +1,7 @@
-import sqlite3
-
 import atexit
 import sqlite3
-from dtos import *
-from daos import _Users, _Reviews, _Medias
+from Server.dbconnect.daos import _Users, _Reviews, _Medias
+
 
 class _Repository:
     def __init__(self):

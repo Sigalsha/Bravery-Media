@@ -1,4 +1,5 @@
-from dtos import Review, User, Media
+from Server.dbconnect.dtos import Review, User, Media
+
 
 class _Reviews:
     def __init__(self, conn):
