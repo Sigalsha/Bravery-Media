@@ -7,7 +7,7 @@ from daos import _Users, _Reviews, _Medias
 
 class _Repository:
     def __init__(self):
-        #replace with AWS db location
+        # replace with AWS db location
         self._conn = sqlite3.connect('database.db')
         self.users = _Users(self._conn)
         self.reviews = _Reviews(self._conn)
@@ -17,10 +17,10 @@ class _Repository:
         self._conn.commit()
         self._conn.close()
 
-
     """
     TEMP FOR NOW
     """
+
     def create_tables(self):
         self._conn.executescript("""
         CREATE TABLE IF NOT EXISTS users(
