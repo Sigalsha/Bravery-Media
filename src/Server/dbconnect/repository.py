@@ -45,9 +45,9 @@ class _Repository:
         type TEXT NOT NULL
         );
         
-        CREATE TABLE IF NOT EXIST braveryMoments(
+        CREATE TABLE IF NOT EXISTS braveryMoments(
         id INTEGER PRIMARY KEY,
-        media_id INTEGER NOT NULL
+        media_id INTEGER NOT NULL,
         start INTEGER NOT NULL,
         FOREIGN KEY(media_id) REFERENCES media(id)
         );
