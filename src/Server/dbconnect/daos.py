@@ -114,6 +114,7 @@ class _Medias:
         """.format(col_name))
         return c.fetchone()[0]
 
+
 class _BraveryMoments:
     def __init__(self, conn):
         self._conn = conn
