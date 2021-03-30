@@ -10,7 +10,7 @@ app = Flask(__name__)
 @app.route('/get_top_items', methods=['GET'])
 def get_top_items():
     category = request.args.get("category")
-    search_favorites_by_category(category)
+    # search_favorites_by_category(category)
 
 
 @app.route('/get_search_results', methods=['GET'])
@@ -36,7 +36,7 @@ def add_review():
 
 @app.route('/add_rating', methods=['POST'])
 def add_rating():
-
+    None
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

@@ -29,7 +29,7 @@ class _Repository:
 
         CREATE TABLE IF NOT EXISTS reviews(
         id INTEGER PRIMARY KEY,
-        media_id INTEGER PRIMARY KEY,
+        media_id NOT NULL,
         review TEXT NOT NULL,
         reviewer INT NOT NULL,
         date DATE NOT NULL,
@@ -41,8 +41,13 @@ class _Repository:
         CREATE TABLE IF NOT EXISTS medias(
         id INTEGER PRIMARY KEY,
         name TEXT NOT NULL,
-        type TEXT NOT NULL,
-        FOREIGN KEY(logistic) REFERENCES logistics(id)
+        type TEXT NOT NULL
+        );
+        
+        CREATE TABLE ID NOT EXIST braveryMoments(
+        id INTEGER PRIMARY KEY,
+        date DATE NOT NULL,
+        FOREIGN KEY(media_id) REFERENCES media(id)
         );
         """)
 
