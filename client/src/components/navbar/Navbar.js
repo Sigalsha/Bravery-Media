@@ -3,15 +3,15 @@ import Link from "../link/Link";
 import { NavGroup } from "./style";
 
 const links = [
-  { id: 1, to: "/", name: "בית" },
-  { id: 2, to: "/movies", name: "סרטים" },
+  { id: 1, to: "/", name: "Home" },
+  { id: 2, to: "/movies", name: "Movies" },
   {
     id: 3,
     to: "/books",
-    name: "ספרים",
+    name: "Books",
   },
-  { id: 4, to: "/songs", name: "שירים" },
-  { id: 5, to: "/articles", name: "מאמרים" },
+  { id: 4, to: "/songs", name: "Songs" },
+  { id: 5, to: "/articles", name: "Articles" },
 ];
 
 const Navbar = () => {
