@@ -8,6 +8,6 @@ export const NavGroup = styled.div`
   flex-flow: row-wrap;
   justify-content: space-around;
   max-width: 100%;
-  height: 5%;
+  height: 10vh;
   background-color: ${colors.GREY};
 `;

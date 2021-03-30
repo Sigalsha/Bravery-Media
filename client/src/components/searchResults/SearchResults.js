@@ -4,7 +4,7 @@ const SearchResults = ({ searchResults }) => {
   return (
     <ul>
       {searchResults.map((item) => (
-        <div>
+        <div key={item.id}>
           <span>name: {item.name}</span>
           <br />
           <span>term type: {item.searchType}</span>
@@ -14,10 +14,10 @@ const SearchResults = ({ searchResults }) => {
             {item.description}
           </p>
           <br />
-          <span>heroism index: {item.heroismIndex} / 5</span>
+          <span>heroism rate: {item.heroismRate} / 5</span>
           <br />
           <ul>
-            {item.recommendation.map((rec) => {
+            {item.recommendations.map((rec) => {
               return <li>{rec}</li>;
             })}
           </ul>

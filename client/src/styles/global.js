@@ -15,10 +15,8 @@ export const GlobalStyles = createGlobalStyle`
   body {
     width: 100%;
     text-rendering: optimizeLegibility;
-    font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", 
+    font-family: "Roboto", Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", 
     Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-    dir: rtl;
-    text-align: right;
   }
   
   button {

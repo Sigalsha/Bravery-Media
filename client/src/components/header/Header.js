@@ -1,9 +1,9 @@
 import React from "react";
 
-import { Text } from "./style";
+import { H1Element } from "./style";
 
 const Header = () => {
-  return <Text>Act Of Heroes</Text>;
+  return <H1Element>Bravery Act</H1Element>;
 };
 
 export default Header;

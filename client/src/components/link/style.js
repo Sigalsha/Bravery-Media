@@ -11,8 +11,8 @@ export const StyledLink = styled(Link)`
   background-color: ${({ isActiveRoute }) =>
     isActiveRoute ? `${colors.FOCUS_BLUE}` : `${colors.DARK_BLUE}`};
   cursor: pointer;
-  padding: 1.5% 5%;
-  margin: 1.5%;
+  padding: 1.4% 5%;
+  margin: 1%;
 
   &:hover {
     opacity: 0.8;
@@ -32,21 +32,26 @@ export const StyledLink = styled(Link)`
 
   @media ${device.mobileL} {
   }
+
+  @media ${device.laptop} {
+  }
+
+  @media ${device.laptopL} {
+    padding: 0.7% 5%;
+  }
 `;
 
 export const LinkTitle = styled.span`
-  font-size: ${fontSizes.fontS};
+  font-size: ${fontSizes.fontM};
   color: ${colors.WHITE};
+  text-align: center;
 
   @media ${device.mobileS} {
-    font-size: ${fontSizes.fontXS};
   }
 
   @media ${device.tablet} {
-    font-size: ${fontSizes.fontS2};
   }
 
   @media ${device.laptop} {
-    font-size: ${fontSizes.fontS};
   }
 `;
