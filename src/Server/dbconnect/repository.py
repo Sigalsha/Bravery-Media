@@ -1,6 +1,6 @@
 import atexit
 import sqlite3
-from Server.dbconnect.daos import _Users, _Reviews, _Medias
+from Server.dbconnect.daos import _Users, _Reviews, _Medias, _BraveryMoments
 
 
 class _Repository:
@@ -10,6 +10,7 @@ class _Repository:
         self.users = _Users(self._conn)
         self.reviews = _Reviews(self._conn)
         self.media = _Medias(self._conn)
+        self.braveryMoment = _BraveryMoments(self._conn)
 
     def _close(self):
         self._conn.commit()
@@ -31,9 +32,9 @@ class _Repository:
         id INTEGER PRIMARY KEY,
         media_id NOT NULL,
         review TEXT NOT NULL,
-        reviewer INT NOT NULL,
+        reviewer INTEGER NOT NULL,
         date DATE NOT NULL,
-        rating INT NOT NULL,
+        rating INTEGER NOT NULL,
         FOREIGN KEY(reviewer) REFERENCES users(id)
         FOREIGN KEY(media_id) REFERENCES media(id)
         );
@@ -44,9 +45,10 @@ class _Repository:
         type TEXT NOT NULL
         );
         
-        CREATE TABLE ID NOT EXIST braveryMoments(
+        CREATE TABLE IF NOT EXIST braveryMoments(
         id INTEGER PRIMARY KEY,
-        date DATE NOT NULL,
+        media_id INTEGER NOT NULL
+        start INTEGER NOT NULL,
         FOREIGN KEY(media_id) REFERENCES media(id)
         );
         """)

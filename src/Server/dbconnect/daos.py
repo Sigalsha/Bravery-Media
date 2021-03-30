@@ -1,4 +1,4 @@
-from Server.dbconnect.dtos import Review, User, Media
+from Server.dbconnect.dtos import Review, User, Media, BraveryMoment
 
 
 class _Reviews:
@@ -111,6 +111,43 @@ class _Medias:
         c = self._conn.cursor()
         c.execute("""
         SELECT SUM({}) FROM medias
+        """.format(col_name))
+        return c.fetchone()[0]
+
+class _BraveryMoments:
+    def __init__(self, conn):
+        self._conn = conn
+
+    def insert(self, bravery_moment):
+        self._conn.execute("""
+        INSERT INTO braveryMoments (id, media_id , start) VALUES (?, ?, ?)
+        """, list(vars(bravery_moment).values()))
+
+    def find_by(self, **keyvals):
+        column_names = keyvals.keys()
+        params = keyvals.values()
+
+        stmt = 'SELECT * FROM braveryMoments WHERE {}'.format(' AND '.join([col + '=?' for col in column_names]))
+
+        c = self._conn.cursor()
+        c.execute(stmt, list(params))
+        return [BraveryMoment(*row[:]) for row in c.fetchall()]
+
+    def delete(self, id):
+        self._conn.execute("""
+                DELETE FROM braveryMoments WHERE id=?
+                """, (str(id)))
+
+    def update(self, id, **keyvals):
+        column_names = keyvals.keys()
+        params = keyvals.values()
+        stmt = 'Update braveryMoments SET {} WHERE id={}'.format(' AND '.join([col + '=?' for col in column_names]), id)
+        self._conn.execute(stmt, list(params))
+
+    def sum_column(self, col_name):
+        c = self._conn.cursor()
+        c.execute("""
+        SELECT SUM({}) FROM braveryMoments
         """.format(col_name))
         return c.fetchone()[0]
 
