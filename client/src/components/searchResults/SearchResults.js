@@ -1,37 +1,37 @@
 import React from "react";
-import {SearchResultContainer} from "./style"
+import {Grid,Item} from "./style"
 const SearchResults = ({ searchResults }) => {
   return (
-    <SearchResultContainer>
-    <ul>
+    <Grid>
       {searchResults.map((item) => (
-        <div key={item.id}>
-          <span>name: {item.name}</span>
-          <br />
-          <span>term type: {item.searchType}</span>
-          <br />
+        <Item key={item.id}>
           <p>
-            description:
+            name:{item.name}<br/>
+            type:{item.searchType}<br/>
+            description:<br/>
             {item.description}
           </p>
-          <br />
-          <span>heroism rate: {item.heroismRate} / 5</span>
-          <br />
-          <ul>
-            {item.recommendations.map((rec) => {
-              return <li>{rec}</li>;
-            })}
-          </ul>
-          <ul>
-            {item.selectedHeroismMoments.map((moment) => {
-              return <li>{moment}</li>;
-            })}
-          </ul>
-          {item.suitableForEducation}
-        </div>
+          {/*<span>name: {item.name}</span>*/}
+          {/*<span>term type: {item.searchType}</span>*/}
+          {/*<p>*/}
+          {/*  description:*/}
+          {/*  {item.description}*/}
+          {/*</p>*/}
+          {/*<span>heroism rate: {item.heroismRate} / 5</span>*/}
+          {/*/!*<ul>*!/*/}
+          {/*/!*  {item.recommendations.map((rec) => {*!/*/}
+          {/*/!*    return <li>{rec}</li>;*!/*/}
+          {/*/!*  })}*!/*/}
+          {/*/!*</ul>*!/*/}
+          {/*/!*<ul>*!/*/}
+          {/*/!*  {item.selectedHeroismMoments.map((moment) => {*!/*/}
+          {/*/!*    return <li>{moment}</li>;*!/*/}
+          {/*/!*  })}*!/*/}
+          {/*/!*</ul>*!/*/}
+          {/*{item.suitableForEducation}*/}
+        </Item>
       ))}
-    </ul>
-    </SearchResultContainer>
+    </Grid>
   );
 };
 
