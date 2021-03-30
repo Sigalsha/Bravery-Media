@@ -9,6 +9,7 @@ const searchResultsItems = [
     id: 1,
     name: "Schindler's List",
     searchType: "movie",
+    creator: "Steven Spielberg",
     description:
       "In German-occupied Poland during World War II, industrialist Oskar Schindler...",
     heroismRate: 3,
@@ -20,6 +21,7 @@ const searchResultsItems = [
     id: 2,
     name: "The Pianist",
     searchType: "movie",
+    creator: "Roman Polanski",
     description: "A Polish Jewish musician...",
     heroismRate: 5,
     selectedHeroismMoments: [60, 90],
