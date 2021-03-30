@@ -31,20 +31,30 @@ export const Input = styled.input`
     isSubmit ? `${colors.MAIN_BLUE}` : `inherit`};
   font-weight: ${({ isSubmit }) => (isSubmit ? `bold` : `inherit`)};
   text-transform: ${({ isSubmit }) => (isSubmit ? `uppercase` : `none`)};
+  letter-spacing: ${({ isSubmit }) => (isSubmit ? `0.8` : `none`)};
 `;
 
 export const StyledButton = styled.button`
   text-decoration: none;
   border: transparent;
   border-radius: 4px;
-  margin: 1.5%;
-  padding: 2%;
+  margin: 1%;
+  padding: 1.5%;
+  font-size: ${fontSizes.fontS2};
+`;
+
+export const Select = styled.select`
+  background-color: ${colors.TRANSPARENT};
+  text-align: center;
+  border: 1px solid ${colors.BORDER_GREY};
+  border-radius: 4px;
+  padding: 1% 1.5%;
 `;
 
 export const ErrorAlert = styled.div`
   color: ${colors.RED};
   font-size: ${fontSizes.fontS2};
-  margin: 1.5%;
+  margin: 1%;
 `;
 
 export const Textarea = styled.textarea`

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -15,17 +15,25 @@ import {
   ErrorAlert,
   Textarea,
   Divider,
+  Select,
 } from "./style";
 
 export default function AddRecommendation({ props }) {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const { register, errors, handleSubmit } = useForm();
-  const [indexes, setIndexes] = React.useState([]);
-  const [counter, setCounter] = React.useState(0);
+  const [indexes, setIndexes] = useState([]);
+  const [counter, setCounter] = useState(0);
+  const [selectVal, setSelectVal] = useState();
 
   const onSubmit = (data) => {
     console.log(data);
-    setOpen(false);
+    if (errors === [] && selectVal !== "") {
+      setIndexes([]);
+      setCounter(0);
+      // organize json data for server
+      // send data to server
+      setOpen(false);
+    }
   };
   console.log("errors", errors);
 
@@ -39,10 +47,6 @@ export default function AddRecommendation({ props }) {
       ...prevIndexes.filter((item) => item !== index),
     ]);
     setCounter((prevCounter) => prevCounter - 1);
-  };
-
-  const clearBraveryMoments = () => {
-    setIndexes([]);
   };
 
   const handleClickOpen = () => {
@@ -91,7 +95,7 @@ export default function AddRecommendation({ props }) {
                 placeholder="add your name"
                 ref={register({ required: true, maxLength: 80, minLength: 2 })}
               />
-              {errors.name && "name is required"}
+              {errors.name && <ErrorAlert>name is required</ErrorAlert>}
             </LabelWrapper>
             <Divider />
             <LabelWrapper>
@@ -99,7 +103,11 @@ export default function AddRecommendation({ props }) {
                 Rate the level of bravery of the {props.searchType} (from 1 to
                 10)
               </Label>
-              <select name="braveryRate" ref={register({ required: true })}>
+              <Select
+                name="braveryRate"
+                ref={register({ required: true })}
+                onChange={(e) => setSelectVal(e.currentTarget.value)}
+              >
                 <option disabled selected value>
                   select a rate level
                 </option>
@@ -113,9 +121,12 @@ export default function AddRecommendation({ props }) {
                 <option value="8">8</option>
                 <option value="9">9</option>
                 <option value="10">10</option>
-              </select>
+              </Select>
               {errors.braveryRate && (
-                <ErrorAlert>"please rate the level of bravery"</ErrorAlert>
+                <ErrorAlert>please rate the level of bravery</ErrorAlert>
+              )}
+              {!selectVal && (
+                <ErrorAlert>please rate the level of bravery</ErrorAlert>
               )}
             </LabelWrapper>
             <Divider />
@@ -131,20 +142,17 @@ export default function AddRecommendation({ props }) {
                     <Label>Add part (minute/ page number/ line number)</Label>
                     <Input
                       type="number"
+                      min="0"
                       name={`${fieldName}.moment`}
                       placeholder="add only numbers please"
                       ref={register({ minLength: 1, pattern: /^[0-9]*$/ })}
                     />
-                    {errors[fieldName] && "must contain numbers only"}
-
                     <StyledButton
                       type="button"
                       onClick={removeBraveryMoment(index)}
                     >
                       Remove
                     </StyledButton>
-
-                    {errors[fieldName] && "must contain numbers only"}
                   </fieldset>
                 );
               })}
@@ -152,11 +160,6 @@ export default function AddRecommendation({ props }) {
               <StyledButton type="button" onClick={addBraveryMoment}>
                 Add a bravery part
               </StyledButton>
-
-              <StyledButton type="button" onClick={clearBraveryMoments}>
-                Clear all parts
-              </StyledButton>
-
               {counter === 0 && (
                 <ErrorAlert>Please add a bravery part</ErrorAlert>
               )}
@@ -166,7 +169,7 @@ export default function AddRecommendation({ props }) {
               <Label>Why do you think this parts represent bravery acts?</Label>
               <Textarea
                 isTextArea={true}
-                name="recommendation description"
+                name="recommendationDesc"
                 placeholder="explain why are you recommending this parts"
                 ref={register({
                   required: true,
@@ -174,6 +177,9 @@ export default function AddRecommendation({ props }) {
                   minLength: 2,
                 })}
               />
+              {errors.recommendationDesc && (
+                <ErrorAlert>please add your recommendation</ErrorAlert>
+              )}
             </LabelWrapper>
             <Input type="submit" isSubmit={true} />
           </form>
