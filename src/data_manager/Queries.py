@@ -10,13 +10,8 @@ def search_by_type(item_type, keywords):
         movies_list = imdb_conn.search(keywords)
         for movie in movies_list:
             data[movie.id] = vars(movie)
-            _add_data_to_movie(movie, data[movie.id])
-
-    # TODO: add keywords to search by
-    media_list = repo.media.find_by(type=item_type)
-    data = {}
-    for media in media_list:
-        data[media.id] = media.__dict__
+            _update_movie_db(movie)
+            _add_bravery_rate(movie, data[movie.id])
     return data
 
 
@@ -29,7 +24,7 @@ def search_favorites(category):
 def get_item_info(item_id):
     # TODO: connect to imdb
     media = repo.media.find_by(id=item_id)[0]
-    return media.__dict__
+    return vars(media)
 
 
 def add_review(item_id, bravery_moments, content, reviewer):
@@ -43,13 +38,30 @@ def add_rating(item_id, rating):
 
 # region private methods
 
-def _add_data_to_movie(movie, data):
+
+def _update_movie_db(movie):
     media = repo.media.find_by(id=movie.id)
     if not media:
         repo.media.insert(Media(movie.id, movie.title, "movie"))
-    else:
-        # get reviews
-        data['']=''
+
+
+def _add_data_to_movie(movie, data):
+    _add_bravery_rate(movie.id, data)
+    _add_heroism_moments(movie.id, data)
+    _add_recommendations(movie.id, data)
+
+
+def _add_bravery_rate(movie_id, data):
+    data['braveryRate'] = repo.reviews.get_average_rating()
+
+
+def _add_heroism_moments(movie_id, data):
+    repo.braveryMoment.find_by(id=movie_id)
+    data['selectedHeroismMoments'] = 0
+
+
+def _add_recommendations(movie_id, data):
+    data['recommendations'] = 0
 
 # endregion
 
