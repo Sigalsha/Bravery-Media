@@ -1,6 +1,5 @@
 from dtos import Review, User, Media
 
-
 class _Reviews:
     def __init__(self, conn):
         self._conn = conn
