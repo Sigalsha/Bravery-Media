@@ -1,12 +1,11 @@
-import sqlite3
-
 import atexit
 import sqlite3
-from dtos import *
-from daos import _Users, _Reviews, _Medias
+from Server.dbconnect.daos import _Users, _Reviews, _Medias
+
 
 class _Repository:
     def __init__(self):
+        # replace with AWS db location
         self._conn = sqlite3.connect('database.db')
         self.users = _Users(self._conn)
         self.reviews = _Reviews(self._conn)
@@ -15,6 +14,10 @@ class _Repository:
     def _close(self):
         self._conn.commit()
         self._conn.close()
+
+    """
+    TEMP FOR NOW
+    """
 
     def create_tables(self):
         self._conn.executescript("""
@@ -26,7 +29,7 @@ class _Repository:
 
         CREATE TABLE IF NOT EXISTS reviews(
         id INTEGER PRIMARY KEY,
-        media_id INTEGER PRIMARY KEY,
+        media_id NOT NULL,
         review TEXT NOT NULL,
         reviewer INT NOT NULL,
         date DATE NOT NULL,
@@ -38,8 +41,13 @@ class _Repository:
         CREATE TABLE IF NOT EXISTS medias(
         id INTEGER PRIMARY KEY,
         name TEXT NOT NULL,
-        type TEXT NOT NULL,
-        FOREIGN KEY(logistic) REFERENCES logistics(id)
+        type TEXT NOT NULL
+        );
+        
+        CREATE TABLE ID NOT EXIST braveryMoments(
+        id INTEGER PRIMARY KEY,
+        date DATE NOT NULL,
+        FOREIGN KEY(media_id) REFERENCES media(id)
         );
         """)
 
