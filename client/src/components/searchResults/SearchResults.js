@@ -1,7 +1,8 @@
 import React from "react";
-
+import {SearchResultContainer} from "./style"
 const SearchResults = ({ searchResults }) => {
   return (
+    <SearchResultContainer>
     <ul>
       {searchResults.map((item) => (
         <div key={item.id}>
@@ -30,6 +31,7 @@ const SearchResults = ({ searchResults }) => {
         </div>
       ))}
     </ul>
+    </SearchResultContainer>
   );
 };
 
