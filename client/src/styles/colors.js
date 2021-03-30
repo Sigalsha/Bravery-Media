@@ -11,4 +11,5 @@ export const colors = {
   LOGO_BLUE: "#004d99",
   FOCUS_BLUE: "rgba(0, 51, 153, 0.5)",
   PINK: "#ff0066",
+  RED:"#ff0000"
 };
