@@ -9,7 +9,7 @@ app = Flask(__name__)
 @app.route('/get_top_items', methods=['GET'])
 def get_top_items():
     category = request.args.get("category")
-    top_items = search_favorites_by_category(category)
+    top_items = search_favorites(category)
     return json.dumps(top_items)
 
 
