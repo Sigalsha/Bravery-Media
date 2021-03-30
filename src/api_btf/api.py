@@ -23,7 +23,7 @@ def navigate_to_search_results():
 @app.route('/get_item', methods=['GET'])
 def get_item():
     item_id = request.args.get("item_id")
-    get_item_info(item_id)
+    get_movie_info(item_id)
 
 @app.route('/add_recommendation', methods=['POST'])
 def add_review():
