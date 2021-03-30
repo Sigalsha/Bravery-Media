@@ -1,15 +1,18 @@
 import React from "react";
-import {Grid,Item} from "./style"
+import { Grid, Item } from "./style";
 const SearchResults = ({ searchResults }) => {
   return (
     <Grid>
       {searchResults.map((item) => (
         <Item key={item.id}>
           <p>
-            name:{item.name}<br/>
-            type:{item.searchType}<br/>
-            description:<br/>
-            {item.description}
+            name:{item.title}
+            <br />
+            type:{item.type}
+            <br />
+            description:
+            <br />
+            {item.plot}
           </p>
           {/*<span>name: {item.name}</span>*/}
           {/*<span>term type: {item.searchType}</span>*/}

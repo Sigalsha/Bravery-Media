@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { colors } from "../../styles/colors";
+import { fontSizes } from "../../styles/typography";
 
 export const SearchContainer = styled.div`
   width: 30%;
@@ -28,4 +29,13 @@ export const Input = styled.input`
     border: none;
     outline: none;
   }
+`;
+
+export const StyledButton = styled.button`
+  text-decoration: none;
+  border: transparent;
+  border-radius: 4px;
+  margin: 1%;
+  padding: 1.5%;
+  font-size: ${fontSizes.fontS2};
 `;
