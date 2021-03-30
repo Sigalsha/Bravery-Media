@@ -3,7 +3,6 @@ import Link from "../link/Link";
 import { NavGroup } from "./style";
 
 const links = [
-<<<<<<< HEAD
   { id: 1, to: "/", name: "home" },
   { id: 2, to: "/movies", name: "movies" },
   {
@@ -13,17 +12,6 @@ const links = [
   },
   { id: 4, to: "/songs", name: "songs" },
   { id: 5, to: "/articles", name: "articles" },
-=======
-  { id: 1, to: "/", name: "Home" },
-  { id: 2, to: "/movies", name: "Movies" },
-  {
-    id: 3,
-    to: "/books",
-    name: "Books",
-  },
-  { id: 4, to: "/songs", name: "Songs" },
-  { id: 5, to: "/articles", name: "Articles" },
->>>>>>> 476daa910a6a9da087f88c67284b250923b6be3a
 ];
 
 const Navbar = () => {
