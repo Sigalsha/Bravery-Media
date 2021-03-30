@@ -16,8 +16,8 @@ import { colors } from "../../styles/colors";
 
 export const Item = styled.div`
   display: flex;
-  justify-content: center;
-  width: 50%;
+  justify-content: left;
+  width: 100%;
   padding: .5rem;
   &:hover
   {
@@ -28,7 +28,8 @@ export const Item = styled.div`
 
 
 export const Grid = styled.div`
-  width: 100%;
+  width: 90%;
+  padding-left: 10%;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 5px;  
