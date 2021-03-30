@@ -2,7 +2,7 @@ def search_by_type(item_type, keywords):
     None
 
 
-def search_favorites_by_category():
+def search_favorites():
     None
 
 
