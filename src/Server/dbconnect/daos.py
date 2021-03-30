@@ -83,7 +83,7 @@ class _Medias:
 
     def insert(self, media):
         self._conn.execute("""
-        INSERT INTO media (id, name , type) VALUES (?, ?, ?)
+        INSERT INTO medias (id, name , type) VALUES (?, ?, ?)
         """, list(vars(media).values()))
 
     def find_by(self, **keyvals):
