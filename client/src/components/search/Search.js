@@ -82,13 +82,13 @@ const Search = () => {
           onChange={handleChange}
         />
       </SearchContainer>
-      <ul>
-        {searchResults.map((item) => {
-          return <div key={item.id}>{item.name}</div>;
-        })}
-      </ul>
+      {/*<ul>*/}
+      {/*  {searchResults.map((item) => {*/}
+      {/*    return <div key={item.id}>{item.name}</div>;*/}
+      {/*  })}*/}
+      {/*</ul>*/}
 
-      {/*  <SearchResults searchResults={searchResults} /> */}
+        <SearchResults searchResults={searchResults} />
     </div>
   );
 };
