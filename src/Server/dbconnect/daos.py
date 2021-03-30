@@ -1,4 +1,10 @@
 from Server.dbconnect.dtos import Review, User, Media, BraveryMoment
+from Server.dbconnect.dbconfig import dbvalues
+
+def _limit_media_results(lst):
+    if len(lst) > dbvalues["media_limit"]:
+        return lst[:50]
+
 
 
 class _Reviews:
@@ -45,6 +51,12 @@ class _Reviews:
         """.format(col_name))
         return c.fetchone()[0]
 
+    def get_average_rating(self):
+        c = self._conn.cursor()
+        c.execute("""
+               SELECT avg(rating) FROM reviews
+               """)
+        return c.fetchone()[0]
 
 class _Users:
     def __init__(self, conn):
@@ -64,6 +76,9 @@ class _Users:
         c = self._conn.cursor()
         c.execute(stmt, list(params))
         return [User(*row[:]) for row in c.fetchall()]
+
+    def limited_find_by(self,**keyvals):
+        return _limit_media_results(self.find_by(keyvals))
 
     def delete(self, id):
         self._conn.execute("""
@@ -150,4 +165,6 @@ class _BraveryMoments:
         SELECT SUM({}) FROM braveryMoments
         """.format(col_name))
         return c.fetchone()[0]
+
+
 
