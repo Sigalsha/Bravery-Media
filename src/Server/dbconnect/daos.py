@@ -14,7 +14,7 @@ class _Reviews:
 
     def insert(self, review):
         self._conn.execute("""
-        INSERT INTO reviews (media_id, date, rating, review, reviewer) VALUES (?, ?, ?, ?)
+        INSERT INTO reviews (media_id, date, rating, review, reviewer) VALUES (?, ?, ?, ?, ?)
         """, list(vars(review).values())[1:])
 
     def find_by(self, **keyvals):
@@ -56,7 +56,7 @@ class _Reviews:
         c = self._conn.cursor()
         c.execute("""
                SELECT avg(rating) FROM reviews Where media_id =?
-               """, (str(media_id)))
+               """, (str(media_id),))
         return c.fetchone()[0]
 
 
@@ -66,7 +66,7 @@ class _Users:
 
     def insert(self, user):
         self._conn.execute("""
-        INSERT INTO users (id, name, type) VALUES (?, ?, ?)
+        INSERT INTO users (name, type) VALUES (?, ?)
         """, list(vars(user).values()))
 
     def find_by(self, **keyvals):
@@ -77,7 +77,7 @@ class _Users:
 
         c = self._conn.cursor()
         c.execute(stmt, list(params))
-        return [User(*row[:]) for row in c.fetchall()]
+        return [User(*row[1:], row[0]) for row in c.fetchall()]
 
     def limited_find_by(self, **keyvals):
         column_names = keyvals.keys()
@@ -119,7 +119,7 @@ class _Medias:
 
         c = self._conn.cursor()
         c.execute(stmt, list(params))
-        return [Media(*row[:]) for row in c.fetchall()]
+        return [Media(*row[1:], row[0]) for row in c.fetchall()]
 
     def delete(self, id):
         self._conn.execute("""
@@ -148,7 +148,7 @@ class _Medias:
 
         c = self._conn.cursor()
         c.execute(stmt, list(params))
-        return [Media(*row[:]) for row in c.fetchall()]
+        return [Media(*row[1:], row[0]) for row in c.fetchall()]
 
 
 
@@ -158,7 +158,7 @@ class _BraveryMoments:
 
     def insert(self, bravery_moment):
         self._conn.execute("""
-        INSERT INTO braveryMoments (id, media_id , start) VALUES (?, ?, ?)
+        INSERT INTO braveryMoments (media_id , start) VALUES ( ?, ?)
         """, list(vars(bravery_moment).values()))
 
     def find_by(self, **keyvals):
@@ -169,7 +169,7 @@ class _BraveryMoments:
 
         c = self._conn.cursor()
         c.execute(stmt, list(params))
-        return [BraveryMoment(*row[:]) for row in c.fetchall()]
+        return [BraveryMoment(*row[1:], row[0]) for row in c.fetchall()]
 
     def delete(self, id):
         self._conn.execute("""

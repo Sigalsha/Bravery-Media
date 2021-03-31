@@ -35,8 +35,8 @@ class _Repository:
         media_id NOT NULL,
         review TEXT NOT NULL,
         reviewer INTEGER NOT NULL,
-        date DATE NOT NULL,
         rating INTEGER NOT NULL,
+        date DATE NOT NULL,
         FOREIGN KEY(reviewer) REFERENCES users(id)
         FOREIGN KEY(media_id) REFERENCES media(id)
         );
