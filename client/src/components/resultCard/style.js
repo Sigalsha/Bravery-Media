@@ -16,8 +16,8 @@ export const HeaderWrapper = styled.div`
 `;
 
 export const ImgElement = styled.img`
-  height: 16vh;
-  width: 9vw;
+  height: 20vh;
+  width: 15vw;
   margin-right: 2%;
   @media (max-width: 480px) {
     height: 120px;

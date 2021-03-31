@@ -5,8 +5,7 @@ import { colors } from "../../styles/colors";
 export const LabelWrapper = styled.div`
   border: transparent;
   border-radius: 4px;
-  padding: 2% 0;
-  margin: 0.5% 0;
+  padding: 1% 0;
 `;
 
 export const Label = styled.label`

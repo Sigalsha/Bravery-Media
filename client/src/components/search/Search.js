@@ -140,4 +140,3 @@ const Search = (props) => {
 };
 
 export default Search;
-// resultOpen={resultOpen}

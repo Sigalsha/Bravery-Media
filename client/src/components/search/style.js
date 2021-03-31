@@ -11,7 +11,7 @@ export const SearchWrapper = styled.div`
 `;
 
 export const SearchContainer = styled.div`
-  width: 25%;
+  width: 30%;
   margin: 2%;
   display: ${({ resultOpen }) => (resultOpen ? "none" : "flex")};
   align-items: center;
@@ -21,7 +21,7 @@ export const SearchContainer = styled.div`
   border-radius: 5px;
 
   @media ${device.laptop} {
-    width: 20%;
+    width: 30%;
   }
 
   @media ${device.laptopL} {
@@ -55,7 +55,7 @@ export const StyledButton = styled.button`
   outline: none;
   border: transparent;
   border-radius: 4px;
-  margin: 1% 1% 1% auto;
+  margin: 2% 0.5% 1% auto;
   width: 20%;
   background-color: ${colors.LIGHT_GREY};
 `;

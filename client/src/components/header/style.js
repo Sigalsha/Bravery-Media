@@ -17,3 +17,24 @@ export const H1Element = styled.h1`
   @media ${device.mobileL} {
   }
 `;
+
+export const Logo = styled.img`
+  height: 9vh;
+  width: 16vw;
+  margin: 1.5%;
+
+  @media ${device.mobileS} {
+    height: 5vw;
+    width: 10vw;
+  }
+
+  @media ${device.tablet} {
+    height: 5vw;
+    width: 10vw;
+  }
+
+  @media ${device.laptop} {
+    height: 9vh;
+    width: 16vw;
+  }
+`;
