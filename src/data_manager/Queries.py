@@ -8,35 +8,42 @@ def search_by_type(item_type, keywords):
     data = {}
     if item_type == "movie":
         movies_list = imdb_conn.search(keywords)
-        for movie in movies_list:
+        _order_media_list(movies_list, data)
+    return data
+
+
+def get_item_info(item_id):
+    data = {}
+    media = repo.media.find_by(id=item_id)[0]
+    if media.type == "movie":
+        movie_list = imdb_conn.search(media.name)
+        for movie in movie_list:
             data[movie.id] = vars(movie)
             _update_movie_db(movie)
-            _add_bravery_rate(movie, data[movie.id])
+            _add_data_to_movie(movie, data[movie.id])
     return data
 
 
 def search_favorites(category):
-    # top 50 return all
-    repo.media.find_by(type=category)
-    None
+    media_list = repo.media.limited_find_by(type=category)
+    return _order_media_list(media_list, {})
 
 
-def get_item_info(item_id):
-    # TODO: connect to imdb
-    media = repo.media.find_by(id=item_id)[0]
-    return vars(media)
+def add_review(item_id, rating, bravery_moments, content, reviewer):
+    import random
+    repo.reviews.insert(Review(item_id, content, reviewer, rating, datetime.datetime.now()))
+    repo.braveryMoment.insert(BraveryMoment(random.randint(1,10000), item_id, bravery_moments))
 
-
-def add_review(item_id, bravery_moments, content, reviewer):
-    review = Review(item_id, content, reviewer, bravery_moments, datetime.datetime.now())
-    repo.reviews.insert()
-
-
-def add_rating(item_id, rating):
-    review = Review(item_id, "", None, rating, datetime.datetime.now())
-    repo.reviews.insert(review)
 
 # region private methods
+
+
+def _order_media_list(movies_list, data):
+    for movie in movies_list:
+        data[movie.id] = vars(movie)
+        _update_movie_db(movie)
+        _add_bravery_rate(movie.id, data[movie.id])
+    return data
 
 
 def _update_movie_db(movie):
@@ -52,16 +59,26 @@ def _add_data_to_movie(movie, data):
 
 
 def _add_bravery_rate(movie_id, data):
-    data['braveryRate'] = repo.reviews.get_average_rating()
+    rate = repo.reviews.get_average_rating(movie_id)
+    if not rate:
+        rate = "null"
+    data['braveryRate'] = rate
 
 
 def _add_heroism_moments(movie_id, data):
-    repo.braveryMoment.find_by(id=movie_id)
-    data['selectedHeroismMoments'] = 0
+    moments_obj_list = repo.braveryMoment.find_by(media_id=movie_id)
+    moments = []
+    for moment in moments_obj_list:
+        moments.append(moment.start)
+    data['selectedHeroismMoments'] = moments
 
 
 def _add_recommendations(movie_id, data):
-    data['recommendations'] = 0
+    reviews_obj_list = repo.reviews.find_by(media_id=movie_id)
+    reviews = []
+    for recommendation in reviews_obj_list:
+        reviews.append(recommendation.review)
+    data['recommendations'] = reviews
 
 # endregion
 

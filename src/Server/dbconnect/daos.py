@@ -69,6 +69,7 @@ class _Users:
         INSERT INTO users (id, name, type) VALUES (%s, %s, %s)
         """, user.get_sorted_vars())
 
+
     def find_by(self, **keyvals):
         column_names = keyvals.keys()
         params = keyvals.values()
@@ -148,7 +149,7 @@ class _Medias:
 
         c = self._curr
         c.execute(stmt, list(params))
-        return [Media(*row[:]) for row in c.fetchall()]
+        return [Media(*row[1:], row[0]) for row in c.fetchall()]
 
 
 class _BraveryMoments:
