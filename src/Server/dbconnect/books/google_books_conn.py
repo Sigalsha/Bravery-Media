@@ -74,12 +74,17 @@ def score_results(books, keyword):
 def dict_to_obj(book):
     authors = ""
     if 'authors' in book['volumeInfo']:
-        for a in book['volumeInfo']['authors']:
-            authors = "{}, {}".format(authors, a)
+        authors = ", ".join(book['volumeInfo']['authors'])
     if 'imageLinks' in book['volumeInfo']:
         image = book['volumeInfo']['imageLinks']['smallThumbnail'] if 'smallThumbnail' in book['volumeInfo'][
             'imageLinks'] else ""
     else:
         image = ""
+    if 'description' in book['volumeInfo']:
+        description = book['volumeInfo']['description']
+    elif 'subtitle' in book['volumeInfo']:
+        description = book['volumeInfo']['subtitle']
+    else:
+        description = ""
     return BookResult(book['id'], book['volumeInfo']['title'], "Book", image,
-                      book['volumeInfo']['description'], authors, book['score'])
+                      description, authors, book['score'])
