@@ -12,4 +12,5 @@ export const colors = {
   FOCUS_BLUE: "rgba(0, 51, 153, 0.5)",
   PINK: "#ff0066",
   RED: "#ff0000",
+  HOVER_COLOR_1:"#a1ffff",
 };

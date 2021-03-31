@@ -2,16 +2,18 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
-import {Helmet} from "react-helmet";
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 
 ReactDOM.render(
   <React.StrictMode>
-    <Helmet>
-    <meta charSet="utf-8" />
-      <title>Bravery imdb</title>
-    </Helmet>
-    <App />
+      <HelmetProvider>
+          <Helmet>
+              <meta charSet="utf-8" />
+              <title>Bravery imdb</title>
+          </Helmet>
+          <App />
+      </HelmetProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

@@ -9,6 +9,7 @@ import ResultContextProvider from "./contexts/ResultContext";
 
 function App() {
   return (
+  <React.Fragment>
     <Router>
       <GlobalStyles />
       <Navbar />
@@ -21,6 +22,7 @@ function App() {
         <Route path="/articles" render={(props) => <Search {...props} />} />
       </ResultContextProvider>
     </Router>
+  </React.Fragment>
   );
 }
 

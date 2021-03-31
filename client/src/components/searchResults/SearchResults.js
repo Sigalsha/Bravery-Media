@@ -9,7 +9,21 @@ const SearchResults = ({ searchResults }) => {
   return (
     <Grid open={open}>
       {searchResults.map((item) => (
+<<<<<<< HEAD
         <SearchResult item={item} />
+=======
+        <Item key={item.id}>
+          <p>
+            name:{item.title}
+            <br />
+            type:{item.type}
+            <br />
+            description:
+            <br />
+            {item.plot}
+          </p>
+        </Item>
+>>>>>>> d1eed0b014f21744279a17fb193f1b21387652de
       ))}
     </Grid>
   );
