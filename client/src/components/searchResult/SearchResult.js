@@ -47,14 +47,19 @@ const useStyles = makeStyles((theme) => ({
 export default function SearchResult({ item, bookData }) {
   const { onResultClick, resultOpen } = useContext(ResultContext);
   const [imgData, setImageData] = useState("");
+  const [resultCard, setResultCard] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   console.log(item);
 
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
+  const [expanded, setExpanded] = useState(false);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
+  };
+
+  const handleResultClick = () => {
+    setResultCard(true);
   };
 
   useEffect(() => {
@@ -76,6 +81,10 @@ export default function SearchResult({ item, bookData }) {
 
   return (
     <div>
+      {resultCard && (
+        <ResultCard item={item} resultOpen={resultOpen} bookData={bookData} />
+      )}
+
       <Container>
         <Card className={classes.root}>
           <CardHeader title={item.title} />
@@ -107,10 +116,7 @@ export default function SearchResult({ item, bookData }) {
             )}
           </CardContent>
           <CardActions disableSpacing>
-            <MoreInfoIcon onClick={() => onResultClick()}>
-              <ButtonText>More info</ButtonText>
-              <AddCircleIcon style={{ color: `${colors.MAIN_BLUE}` }} />
-            </MoreInfoIcon>
+            <ResultCard item={item} bookData={bookData} />
             <IconButton
               className={clsx(classes.expand, {
                 [classes.expandOpen]: expanded,
@@ -132,9 +138,6 @@ export default function SearchResult({ item, bookData }) {
           </Collapse>
         </Card>
       </Container>
-      {resultOpen && (
-        <ResultCard item={item} resultOpen={resultOpen} bookData={bookData} />
-      )}
     </div>
   );
 }

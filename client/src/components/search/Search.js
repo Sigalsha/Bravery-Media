@@ -5,6 +5,7 @@ import ResultContextProvider from "../../contexts/ResultContext";
 import { ResultContext } from "../../contexts/ResultContext";
 import axios from "axios";
 import Loader from "react-loader-spinner";
+import { colors } from "../../styles/colors";
 
 const URL = "https://www.googleapis.com/books/v1/volumes/ux44DgAAQBAJ";
 
@@ -119,8 +120,8 @@ const Search = (props) => {
       {isLoading ? (
         <div id="loader">
           <Loader
-            type="Ball-Triangle"
-            color="#284d19"
+            type="BallTriangle"
+            color={colors.GREY}
             height={300}
             width={300}
           />

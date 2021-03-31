@@ -16,17 +16,3 @@ const SearchResults = ({ searchResults, bookData }) => {
 };
 
 export default SearchResults;
-
-// resultOpen={resultOpen}
-
-/* <Item key={item.id} open={open} onClick={onResultClick}>
-  <p>
-    name:{item.title}
-    <br />
-    type:{item.type}
-    <br />
-    description:
-    <br />
-    {item.plot}
-  </p>
-</Item>; */
