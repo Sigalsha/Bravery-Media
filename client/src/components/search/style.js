@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { colors } from "../../styles/colors";
 import { fontSizes } from "../../styles/typography";
+import { device } from "../../styles/devices";
 import SearchIcon from "@material-ui/icons/Search";
 
 export const SearchContainer = styled.div`
@@ -12,6 +13,14 @@ export const SearchContainer = styled.div`
   background-color: ${colors.LIGHT_GREY};
   border: 1px solid ${colors.BLACK};
   border-radius: 5px;
+
+  @media ${device.laptop} {
+    width: 20%;
+  }
+
+  @media ${device.laptopL} {
+    width: 15%;
+  }
 `;
 
 export const Input = styled.input`

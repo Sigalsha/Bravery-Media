@@ -1,10 +1,13 @@
 import React from "react";
+import Stepper from "../stepper/Stepper";
+import { H1Element } from "./style";
 
 const Landing = () => {
   return (
     <div>
-      <h1>steps</h1>
-      <h1>Recommended</h1>
+      <H1Element>What you need to do?</H1Element>
+      <Stepper />
+      <H1Element>Recommended</H1Element>
     </div>
   );
 };

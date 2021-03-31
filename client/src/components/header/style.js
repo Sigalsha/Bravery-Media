@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { fontSizes } from "../../styles/typography";
-// import { colors } from "../../styles/colors";
+import { colors } from "../../styles/colors";
 import { device } from "../../styles/devices";
 
 export const H1Element = styled.h1`
@@ -9,6 +9,7 @@ export const H1Element = styled.h1`
   font-weight: bold;
   margin: 30px 0 0 0;
   text-align: center;
+  color: ${colors.DARK_BLUE};
 
   @media ${device.mobileS} {
   }

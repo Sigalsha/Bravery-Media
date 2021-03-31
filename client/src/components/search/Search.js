@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { SearchContainer, Input, StyledButton, StyledIcon } from "./style";
-import { colors } from "../../styles/colors";
 import SearchResults from "../searchResults/SearchResults";
 
 const searchResultsItems = [
@@ -48,20 +47,6 @@ const searchResultsItems = [
   },
 ];
 
-const classes = {
-  input: {
-    backgroundColor: `${colors.TRANSPARENT}`,
-    border: "none",
-    outline: "none",
-    color: `${colors.BLACK}`,
-    marginTop: "1%",
-  },
-  icon: {
-    color: `${colors.DARK_BLUE}`,
-    backgroundColor: `${colors.LIGHT_GREY}`,
-  },
-};
-
 const Search = (props) => {
   const searchType = props.location.pathname;
   console.log(searchType);
@@ -73,6 +58,8 @@ const Search = (props) => {
   };
 
   const handleSearch = () => {
+    // TODO - send req to server with searchType (/route) & searchQuery.
+    // should be async, maybe useEffect()
     const results = searchResultsItems.filter((term) =>
       term.title.toLowerCase().includes(searchTerm)
     );
@@ -90,7 +77,6 @@ const Search = (props) => {
     <div>
       <SearchContainer>
         <Input
-          /*  style={classes.input} */
           type="text"
           name="search"
           placeholder="search..."
