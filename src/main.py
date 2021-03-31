@@ -20,9 +20,9 @@ if __name__ == '__main__':
     x1 = Queries.get_item_info(id1)
     x2 = Queries.get_item_info(id2)
 # get top items test
-    url = 'http://127.0.0.1:5000/get_top_items'
-    params = {'category': 'movie'}
-    req = requests.get(url, params=params)
-    print(req.content)
+#     url = 'http://127.0.0.1:5000/get_top_items'
+#     params = {'category': 'movie'}
+#     req = requests.get(url, params=params)
+#     print(req.content)
 
 
