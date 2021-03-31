@@ -1,10 +1,80 @@
+from Server.dbconnect.repository import repo
+from Server.dbconnect.daos import *
+from Server.dbconnect import imdb_conn
+import datetime
+
+
 def search_by_type(item_type, keywords):
-    None
+    data = {}
+    if item_type == "movie":
+        movies_list = imdb_conn.search(keywords)
+        for movie in movies_list:
+            data[movie.id] = vars(movie)
+            _update_movie_db(movie)
+            _add_bravery_rate(movie, data[movie.id])
+    return data
 
 
-def search_favorites():
-    None
+def get_movie_info(item_id):
+    data = {}
+    media = repo.media.find_by(id=item_id)[0]
+    movie_list = imdb_conn.search(media.name)
+    for movie in movie_list:
+        data[movie.id] = vars(movie)
+        _update_movie_db(movie)
+        _add_data_to_movie(movie, data)
+    return data
 
 
-def get_item_info(item_id):
-    None
+def search_favorites(category):
+    # TODO: need to add limit to media table
+    repo.media.find_by(type=category)
+
+
+def add_review(item_id, bravery_moments, content, reviewer):
+    # TODO: need to remove reviewer from the review
+    review = Review(item_id, content, reviewer, bravery_moments, datetime.datetime.now())
+    repo.reviews.insert()
+
+
+def add_rating(item_id, rating):
+    # TODO: need to remove reviewer
+    review = Review(item_id, "", None, rating, datetime.datetime.now())
+    repo.reviews.insert(review)
+
+# region private methods
+
+
+def _update_movie_db(movie):
+    media = repo.media.find_by(id=movie.id)
+    if not media:
+        repo.media.insert(Media(movie.id, movie.title, "movie"))
+
+
+def _add_data_to_movie(movie, data):
+    _add_bravery_rate(movie.id, data)
+    _add_heroism_moments(movie.id, data)
+    _add_recommendations(movie.id, data)
+
+
+def _add_bravery_rate(movie_id, data):
+    data['braveryRate'] = repo.reviews.get_average_rating(movie_id)
+
+
+def _add_heroism_moments(movie_id, data):
+    moments_obj_list = repo.braveryMoment.find_by(media_id=movie_id)
+    moments = []
+    for moment in moments_obj_list:
+        moments.append(moment.start)
+    data['selectedHeroismMoments'] = moments
+
+
+def _add_recommendations(movie_id, data):
+    reviews_obj_list = repo.reviews.find_by(media_id=movie_id)
+    reviews = []
+    for recommendation in reviews_obj_list:
+        reviews.append(recommendation.review)
+    data['recommendations'] = reviews
+
+# endregion
+

@@ -1,4 +1,5 @@
-import config, json, requests
+import json, requests
+from Server.dbconnect import config
 
 
 class MovieResult:
