@@ -6,7 +6,7 @@ get = {
     'PARAMS': {'accept': "application/json"}
 }
 
-relevant_keywords = [
+relevant_keywords_tier1 = [
     {
         "name": "holocaust (shoah)",
         "id": 1739
@@ -29,7 +29,7 @@ relevant_keywords = [
     }
 ]
 
-relevant_keywords2 = [
+relevant_keywords_tier2 = [
     {
         "id": 1956,
         "name": "world war ii"

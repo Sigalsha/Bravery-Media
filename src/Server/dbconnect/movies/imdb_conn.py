@@ -1,5 +1,6 @@
-import json, requests
-from Server.dbconnect import config
+import json
+import requests
+import Server.dbconnect.movies.config as config
 
 
 class MovieResult:
@@ -14,7 +15,7 @@ class MovieResult:
 def search(text):
     results = []
     i = 1
-    while len(results) < 4 and i < 3:
+    while (len(results) < 4 and i < 3) or (len(results) == 0 and i < 7):
         results = results + (search_page(text, i))
         i = i + 1
     return results
@@ -22,11 +23,11 @@ def search(text):
 
 def search_page(text, page):
     url = config.get['search_movie_url'].format(config.get['API_Key'], text, page)
-    r = requests.get(url=url, params=config.get['PARAMS'])
-    results = json.loads(json.dumps(r.json()['results']))
+    request = requests.get(url=url, params=config.get['PARAMS'])
+    results = json.loads(json.dumps(request.json()['results']))
     results_with_keywords = map(lambda m: add_keywords(m), results)
     relevant_results = list(filter(is_movie_relevant, results_with_keywords))
-    return list(map(lambda m: dict_to_object(m), relevant_results))
+    return list(map(dict_to_object, relevant_results))
 
 
 def add_keywords(movie):
@@ -37,9 +38,9 @@ def add_keywords(movie):
 
 
 def is_movie_relevant(movie):
-    if any(s in movie['keywords'] for s in config.relevant_keywords):
+    if any(s in movie['keywords'] for s in config.relevant_keywords_tier1):
         return True
-    contained_secondary_keywords = list(filter(lambda s: s in movie['keywords'], config.relevant_keywords2))
+    contained_secondary_keywords = list(filter(lambda s: s in movie['keywords'], config.relevant_keywords_tier2))
     if len(contained_secondary_keywords) > 1:
         return True
     return False
