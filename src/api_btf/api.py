@@ -35,15 +35,8 @@ def add_recommendation():
     bravery_moments = recommendation.selectedHeroismMoments
     content = recommendation.recommendation
     reviewer = recommendation.recommenderName
-    add_review(item_id, bravery_moments, content, reviewer)
-
-
-@app.route('/add_heroism_rate', methods=['POST'])
-def add_heroism_rate():
-    rating = request.json
-    item_id = rating.id
-    item_rating = rating.heroism_rate
-    add_rating(item_id, item_rating)
+    item_rating = recommendation.braveryRate
+    add_review(item_id, bravery_moments, content, reviewer, item_rating)
 
 
 if __name__ == '__main__':
