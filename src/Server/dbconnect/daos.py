@@ -14,14 +14,14 @@ class _Reviews:
 
     def insert(self, review):
         self._conn.execute("""
-        INSERT INTO reviews (media_id, date, rating, review, reviewer) VALUES (?, ?, ?, ?)
+        INSERT INTO reviews (media_id, date, rating, review, reviewer) VALUES (%s, %s, %s, %s)
         """, list(vars(review).values())[1:])
 
     def find_by(self, **keyvals):
         column_names = keyvals.keys()
         params = keyvals.values()
 
-        stmt = 'SELECT * FROM reviews WHERE {}'.format(' AND '.join([col + '=?' for col in column_names]))
+        stmt = 'SELECT * FROM reviews WHERE {}'.format(' AND '.join([col + '=%s' for col in column_names]))
 
         c = self._conn.cursor()
         c.execute(stmt, list(params))
@@ -29,13 +29,13 @@ class _Reviews:
 
     def delete(self, id):
         self._conn.execute("""
-                DELETE FROM reviews WHERE id=?
+                DELETE FROM reviews WHERE id=%s
                 """, (str(id)))
 
     def update(self, id, **keyvals):
         column_names = keyvals.keys()
         params = keyvals.values()
-        stmt = 'Update reviews SET {} WHERE id={}'.format(' AND '.join([col + '=?' for col in column_names]), id)
+        stmt = 'Update reviews SET {} WHERE id={}'.format(' AND '.join([col + '=%s' for col in column_names]), id)
         self._conn.execute(stmt, list(params))
 
     def get_reviews_by_date(self):
@@ -55,7 +55,7 @@ class _Reviews:
     def get_average_rating(self, media_id):
         c = self._conn.cursor()
         c.execute("""
-               SELECT avg(rating) FROM reviews Where media_id =?
+               SELECT avg(rating) FROM reviews Where media_id =%s
                """, (str(media_id)))
         return c.fetchone()[0]
 
@@ -66,14 +66,14 @@ class _Users:
 
     def insert(self, user):
         self._conn.execute("""
-        INSERT INTO users (id, name, type) VALUES (?, ?, ?)
+        INSERT INTO users (id, name, type) VALUES (%s, %s, %s)
         """, list(vars(user).values()))
 
     def find_by(self, **keyvals):
         column_names = keyvals.keys()
         params = keyvals.values()
 
-        stmt = 'SELECT * FROM user WHERE {}'.format(' AND '.join([col + '=?' for col in column_names]))
+        stmt = 'SELECT * FROM user WHERE {}'.format(' AND '.join([col + '=%s' for col in column_names]))
 
         c = self._conn.cursor()
         c.execute(stmt, list(params))
@@ -83,7 +83,7 @@ class _Users:
         column_names = keyvals.keys()
         params = keyvals.values()
 
-        stmt = 'SELECT * FROM users WHERE {} LIMIT {}'.format(' AND '.join([col + '=?' for col in column_names]),
+        stmt = 'SELECT * FROM users WHERE {} LIMIT {}'.format(' AND '.join([col + '=%s' for col in column_names]),
                                                              dbvalues["media_limit"])
 
         c = self._conn.cursor()
@@ -92,13 +92,13 @@ class _Users:
 
     def delete(self, id):
         self._conn.execute("""
-                DELETE FROM users WHERE id=?
+                DELETE FROM users WHERE id=%s
                 """, (str(id)))
 
     def update(self, id, **keyvals):
         column_names = keyvals.keys()
         params = keyvals.values()
-        stmt = 'Update users SET {} WHERE id={}'.format(' AND '.join([col + '=?' for col in column_names]), id)
+        stmt = 'Update users SET {} WHERE id={}'.format(' AND '.join([col + '=%s' for col in column_names]), id)
         self._conn.execute(stmt, list(params))
 
 
@@ -108,14 +108,14 @@ class _Medias:
 
     def insert(self, media):
         self._conn.execute("""
-        INSERT INTO medias (id, name , type) VALUES (?, ?, ?)
+        INSERT INTO medias (id, name , type) VALUES (%s, %s, %s)
         """, list(vars(media).values()))
 
     def find_by(self, **keyvals):
         column_names = keyvals.keys()
         params = keyvals.values()
 
-        stmt = "SELECT * FROM medias WHERE {}".format(' AND '.join([col + '=?' for col in column_names]))
+        stmt = "SELECT * FROM medias WHERE {}".format(' AND '.join([col + '=%s' for col in column_names]))
 
         c = self._conn.cursor()
         c.execute(stmt, list(params))
@@ -123,13 +123,13 @@ class _Medias:
 
     def delete(self, id):
         self._conn.execute("""
-                DELETE FROM medias WHERE id=?
+                DELETE FROM medias WHERE id=%s
                 """, (str(id)))
 
     def update(self, id, **keyvals):
         column_names = keyvals.keys()
         params = keyvals.values()
-        stmt = 'Update medias SET {} WHERE id={}'.format(' AND '.join([col + '=?' for col in column_names]), id)
+        stmt = 'Update medias SET {} WHERE id={}'.format(' AND '.join([col + '=%s' for col in column_names]), id)
         self._conn.execute(stmt, list(params))
 
     def sum_column(self, col_name):
@@ -143,7 +143,7 @@ class _Medias:
         column_names = keyvals.keys()
         params = keyvals.values()
 
-        stmt = 'SELECT * FROM medias WHERE {} LIMIT {}'.format(' AND '.join([col + '=?' for col in column_names]),
+        stmt = 'SELECT * FROM medias WHERE {} LIMIT {}'.format(' AND '.join([col + '=%s' for col in column_names]),
                                                              dbvalues["media_limit"])
 
         c = self._conn.cursor()
@@ -158,14 +158,14 @@ class _BraveryMoments:
 
     def insert(self, bravery_moment):
         self._conn.execute("""
-        INSERT INTO braveryMoments (id, media_id , start) VALUES (?, ?, ?)
+        INSERT INTO braveryMoments (id, media_id , start) VALUES (%s, %s, %s)
         """, list(vars(bravery_moment).values()))
 
     def find_by(self, **keyvals):
         column_names = keyvals.keys()
         params = keyvals.values()
 
-        stmt = 'SELECT * FROM braveryMoments WHERE {}'.format(' AND '.join([col + '=?' for col in column_names]))
+        stmt = 'SELECT * FROM braveryMoments WHERE {}'.format(' AND '.join([col + '=%s' for col in column_names]))
 
         c = self._conn.cursor()
         c.execute(stmt, list(params))
@@ -173,13 +173,13 @@ class _BraveryMoments:
 
     def delete(self, id):
         self._conn.execute("""
-                DELETE FROM braveryMoments WHERE id=?
+                DELETE FROM braveryMoments WHERE id=%s
                 """, (str(id)))
 
     def update(self, id, **keyvals):
         column_names = keyvals.keys()
         params = keyvals.values()
-        stmt = 'Update braveryMoments SET {} WHERE id={}'.format(' AND '.join([col + '=?' for col in column_names]), id)
+        stmt = 'Update braveryMoments SET {} WHERE id={}'.format(' AND '.join([col + '=%s' for col in column_names]), id)
         self._conn.execute(stmt, list(params))
 
     def sum_column(self, col_name):
