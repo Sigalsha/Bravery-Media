@@ -27,7 +27,7 @@ def get_item_info(item_id):
                 movie = movie_list[0]
                 movie_data = vars(movie)
                 _update_movie_db(movie)
-                _add_data_to_media(movie, movie_data)
+                _add_data_to_media(movie.id, movie_data)
                 return movie_data
         elif media.media_type == "book":
             books = book_conn.search(media.name)
@@ -36,8 +36,7 @@ def get_item_info(item_id):
             book = _find_book_by_id(book_id, books)
             if book:
                 book_data = vars(book)
-                _update_book_db(book)
-                _add_data_to_media(book, book_data)
+                _add_data_to_media(media.id, book_data)
                 return book_data
     return {}
 
@@ -60,7 +59,7 @@ def _order_movie_list(movies_list, data_list):
     for movie in movies_list:
         media_data = vars(movie)
         _update_movie_db(movie)
-        _add_data_to_media(movie, media_data)
+        _add_data_to_media(movie.id, media_data)
         data_list.append(media_data)
     return data_list
 
@@ -70,7 +69,7 @@ def _order_books_list(books_list, data_list):
         _generate_book_id(book)
         book_data = vars(book)
         _update_book_db(book)
-        _add_data_to_media(book, book_data)
+        _add_data_to_media(book.id, book_data)
         data_list.append(book_data)
     return data_list
 
@@ -87,10 +86,10 @@ def _update_book_db(book):
         repo.media.insert(Media(book.title, "book", book.id))
 
 
-def _add_data_to_media(media, data):
-    _add_bravery_rate(media.id, data)
-    _add_heroism_moments(media.id, data)
-    _add_recommendations(media.id, data)
+def _add_data_to_media(media_id, data):
+    _add_bravery_rate(media_id, data)
+    _add_heroism_moments(media_id, data)
+    _add_recommendations(media_id, data)
 
 
 def _add_bravery_rate(media_id, data):
