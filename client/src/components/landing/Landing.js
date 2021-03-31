@@ -7,7 +7,7 @@ const Landing = () => {
     <div>
       <H1Element>What you need to do?</H1Element>
       <Stepper />
-      <H1Element>Recommended</H1Element>
+      <H1Element>Explanation</H1Element>
     </div>
   );
 };
