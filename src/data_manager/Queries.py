@@ -19,7 +19,10 @@ def search_by_type(item_type, keywords):
 
 
 def get_item_info(item_id):
-    media_list = repo.media.find_by(id=item_id)
+    if str(item_id).isdigit():
+        media_list = repo.media.find_by(id=item_id)
+    else:
+        media_list = repo.media.find_by(id=_get_book_id(item_id))
     if media_list:
         media = media_list[0]
         if media.media_type == "movie":
@@ -33,7 +36,7 @@ def get_item_info(item_id):
                 return movie_data
         elif media.media_type == "book":
             # books = book_conn.search(media.name)
-            book_id = _get_book_id(media)
+            book_id = _get_book_id(media.id)
             # search for the right book
             # book = _find_book_by_id(book_id, books)
             book = book_conn.get_book(book_id)
@@ -69,9 +72,12 @@ def _order_movie_list(movies_list, data_list):
 
 def _order_books_list(books_list, data_list):
     for book in books_list:
-        _generate_book_id(book)
+        # check if book has uuid
+        uuid_b = repo.uuidMap.find_by(string_id=book.id)
+        if not uuid_b:
+            _generate_book_id(book)
+            _update_book_db(book)
         book_data = vars(book)
-        _update_book_db(book)
         _add_data_to_media(book.id, book_data)
         data_list.append(book_data)
     return data_list
@@ -84,9 +90,7 @@ def _update_movie_db(movie):
 
 
 def _update_book_db(book):
-    media = repo.media.find_by(id=book.id)
-    if not media:
-        repo.media.insert(Media(book.title, "book", book.id))
+    repo.media.insert(Media(book.title, "book", book.id))
 
 
 def _add_data_to_media(media_id, data):
@@ -99,7 +103,7 @@ def _add_bravery_rate(media_id, data):
     rate = repo.reviews.get_average_rating(media_id)
     if not rate:
         rate = "null"
-    data['braveryRate'] = rate
+    data['braveryRate'] = str(rate)
 
 
 def _add_heroism_moments(movie_id, data):
@@ -140,11 +144,11 @@ def _generate_book_id(book):
     book.id = book_uuid
 
 
-def _get_book_id(book):
-    uuid_map = repo.uuidMap.find_by(uuid=book.id)
+def _get_book_id(book_id):
+    uuid_map = repo.uuidMap.find_by(string_id=book_id)
     if not uuid_map:
-        raise Exception("book with id: {} not found in bravery-media db.".format(book.id))
-    return uuid_map[0].string_id
+        raise Exception("book with id: {} not found in bravery-media db.".format(book_id))
+    return uuid_map[0].uuid
 
 
 def _find_book_by_id(book_id, books):
