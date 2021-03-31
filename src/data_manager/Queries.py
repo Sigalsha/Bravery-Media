@@ -58,9 +58,6 @@ def _add_data_to_movie(movie, data):
 
 
 def _add_bravery_rate(movie_id, data):
-    #
-    l = repo.reviews.find_by(media_id=movie_id)
-    #
     rate = repo.reviews.get_average_rating(movie_id)
     if not rate:
         rate = "null"
