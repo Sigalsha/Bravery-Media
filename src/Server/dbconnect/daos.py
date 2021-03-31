@@ -83,7 +83,7 @@ class _Users:
         column_names = keyvals.keys()
         params = keyvals.values()
 
-        stmt = 'SELECT * FROM user WHERE {} LIMIT {}'.format(' AND '.join([col + '=?' for col in column_names]),
+        stmt = 'SELECT * FROM users WHERE {} LIMIT {}'.format(' AND '.join([col + '=?' for col in column_names]),
                                                              dbvalues["media_limit"])
 
         c = self._conn.cursor()
@@ -138,6 +138,18 @@ class _Medias:
         SELECT SUM({}) FROM medias
         """.format(col_name))
         return c.fetchone()[0]
+
+    def limited_find_by(self, **keyvals):
+        column_names = keyvals.keys()
+        params = keyvals.values()
+
+        stmt = 'SELECT * FROM medias WHERE {} LIMIT {}'.format(' AND '.join([col + '=?' for col in column_names]),
+                                                             dbvalues["media_limit"])
+
+        c = self._conn.cursor()
+        c.execute(stmt, list(params))
+        return [Media(*row[:]) for row in c.fetchall()]
+
 
 
 class _BraveryMoments:
