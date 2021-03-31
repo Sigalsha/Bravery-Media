@@ -1,4 +1,4 @@
-from Server.dbconnect.dtos import Review, User, Media, BraveryMoment
+from Server.dbconnect.dtos import Review, User, Media, BraveryMoment, UuidMap
 from Server.dbconnect.dbconfig import dbvalues
 
 
@@ -189,5 +189,25 @@ class _BraveryMoments:
         """.format(col_name))
         return c.fetchone()[0]
 
+
+class _UuidMap:
+    def __init__(self, curr):
+        self._curr = curr
+
+    def insert(self, uuidmap):
+        self._curr.execute("""
+        INSERT INTO bm_idMap (uuid, string_id) VALUES (%s, %s)
+
+        """, uuidmap.get_sorted_vars()[:])
+
+    def find_by(self, **keyvals):
+        column_names = keyvals.keys()
+        params = keyvals.values()
+
+        stmt = 'SELECT * FROM bm_idMap WHERE {}'.format(' AND '.join([col + '=%s' for col in column_names]))
+
+        c = self._curr
+        c.execute(stmt, list(params))
+        return [UuidMap(*row[:]) for row in c.fetchall()]
 
 

@@ -1,6 +1,6 @@
 import atexit
 import MySQLdb
-from Server.dbconnect.daos import _Users, _Reviews, _Medias, _BraveryMoments
+from Server.dbconnect.daos import _UuidMap, _Users, _Reviews, _Medias, _BraveryMoments
 import Server.dbconnect.dbconfig as config
 
 
@@ -16,6 +16,7 @@ class _Repository:
         self.reviews = _Reviews(self.cursor)
         self.media = _Medias(self.cursor)
         self.braveryMoment = _BraveryMoments(self.cursor)
+        self.uuidMap = _UuidMap(self.cursor)
 
     def _close(self):
         self._conn.commit()
@@ -31,6 +32,11 @@ class _Repository:
         id INTEGER PRIMARY KEY,
         username TEXT NOT NULL,
         type TEXT NOT NULL
+        );""")
+        self.cursor.execute("""
+        CREATE TABLE IF NOT EXISTS bm_idMap(
+        uuid INTEGER PRIMARY KEY,
+        string_id TEXT NOT NULL,
         );""")
         self.cursor.execute("""
         CREATE TABLE IF NOT EXISTS bm_medias(

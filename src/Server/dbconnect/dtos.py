@@ -10,6 +10,7 @@ class Review:
     def get_sorted_vars(self):
         return [self.id, self.media_id, self.date, self.rating, self.review, self.reviewer]
 
+
 class User:
     def __init__(self, name, user_type, id=None):
         self.id = id
@@ -18,6 +19,15 @@ class User:
 
     def get_sorted_vars(self):
         return [self.id, self.name, self.user_type]
+
+
+class UuidMap:
+    def __init__(self, uuid, string_id):
+        self.uuid = uuid
+        self.string_id = string_id
+
+    def get_sorted_vars(self):
+        return [self.uuid, self.string_id]
 
 
 class Media:
