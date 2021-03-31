@@ -20,7 +20,7 @@ def get_item_info(item_id):
         for movie in movie_list:
             data[movie.id] = vars(movie)
             _update_movie_db(movie)
-            _add_data_to_movie(movie, data)
+            _add_data_to_movie(movie, data[movie.id])
     return data
 
 
@@ -30,7 +30,9 @@ def search_favorites(category):
 
 
 def add_review(item_id, rating, bravery_moments, content, reviewer):
+    import random
     repo.reviews.insert(Review(item_id, content, reviewer, rating, datetime.datetime.now()))
+    repo.braveryMoment.insert(BraveryMoment(random.randint(1,10000), item_id, bravery_moments))
 
 
 # region private methods
@@ -40,7 +42,7 @@ def _order_media_list(movies_list, data):
     for movie in movies_list:
         data[movie.id] = vars(movie)
         _update_movie_db(movie)
-        _add_bravery_rate(movie, data[movie.id])
+        _add_bravery_rate(movie.id, data[movie.id])
     return data
 
 
@@ -57,7 +59,10 @@ def _add_data_to_movie(movie, data):
 
 
 def _add_bravery_rate(movie_id, data):
-    data['braveryRate'] = repo.reviews.get_average_rating(movie_id)
+    rate = repo.reviews.get_average_rating(movie_id)
+    if not rate:
+        rate = "null"
+    data['braveryRate'] = rate
 
 
 def _add_heroism_moments(movie_id, data):
