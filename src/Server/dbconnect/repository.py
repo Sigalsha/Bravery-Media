@@ -1,6 +1,8 @@
 import atexit
 import sqlite3
 from Server.dbconnect.daos import _Users, _Reviews, _Medias, _BraveryMoments
+import Server.dbconnect.dbconfig as config
+
 
 
 class _Repository:
@@ -33,8 +35,8 @@ class _Repository:
         media_id NOT NULL,
         review TEXT NOT NULL,
         reviewer INTEGER NOT NULL,
-        date DATE NOT NULL,
         rating INTEGER NOT NULL,
+        date DATE NOT NULL,
         FOREIGN KEY(reviewer) REFERENCES users(id)
         FOREIGN KEY(media_id) REFERENCES media(id)
         );
@@ -52,6 +54,13 @@ class _Repository:
         FOREIGN KEY(media_id) REFERENCES media(id)
         );
         """)
+
+    def drop_tables(self):
+        for table_name in config.table_names:
+            self._conn.executescript("""
+                    DROP TABLE IF EXISTS {}
+                    );
+                    """.format(table_name))
 
 
 repo = _Repository()
