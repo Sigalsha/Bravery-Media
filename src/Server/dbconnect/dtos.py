@@ -9,21 +9,21 @@ class Review:
 
 
 class User:
-    def __init__(self, id, name, user_type):
+    def __init__(self, name, user_type, id=None):
         self.id = id
         self.name = name
         self.type = user_type
 
 
 class Media:
-    def __init__(self, id, name, media_type):
+    def __init__(self, name, media_type, id=None):
         self.id = id
         self.name = name
         self.type = media_type
 
 
 class BraveryMoment:
-    def __init__(self, id, media_id, start):
+    def __init__(self, media_id, start, id=None):
         self.id = id
         self.media_id = media_id
         self.start = start

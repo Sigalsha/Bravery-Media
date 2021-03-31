@@ -56,7 +56,7 @@ class _Reviews:
         c = self._curr
         c.execute("""
                SELECT avg(rating) FROM reviews Where media_id =%s
-               """, (str(media_id)))
+               """, (str(media_id),))
         return c.fetchone()[0]
 
 
@@ -77,7 +77,7 @@ class _Users:
 
         c = self._curr
         c.execute(stmt, list(params))
-        return [User(*row[:]) for row in c.fetchall()]
+        return [User(*row[1:], row[0]) for row in c.fetchall()]
 
     def limited_find_by(self, **keyvals):
         column_names = keyvals.keys()
@@ -119,7 +119,7 @@ class _Medias:
 
         c = self._curr
         c.execute(stmt, list(params))
-        return [Media(*row[:]) for row in c.fetchall()]
+        return [Media(*row[1:], row[0]) for row in c.fetchall()]
 
     def delete(self, id):
         self._curr.execute("""
@@ -169,7 +169,7 @@ class _BraveryMoments:
 
         c = self._curr
         c.execute(stmt, list(params))
-        return [BraveryMoment(*row[:]) for row in c.fetchall()]
+        return [BraveryMoment(*row[1:], row[0]) for row in c.fetchall()]
 
     def delete(self, id):
         self._curr.execute("""
