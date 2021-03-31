@@ -1,41 +1,32 @@
-import React from "react";
+import React, { useContext } from "react";
+import { ResultContext } from "../../contexts/ResultContext";
 import { Grid, Item } from "./style";
+import SearchResult from "../searchResult/SearchResult";
+
 const SearchResults = ({ searchResults }) => {
+  const { onResultClick, open } = useContext(ResultContext);
+
   return (
-    <Grid>
+    <Grid open={open}>
       {searchResults.map((item) => (
-        <Item key={item.id}>
-          <p>
-            name:{item.title}
-            <br />
-            type:{item.type}
-            <br />
-            description:
-            <br />
-            {item.plot}
-          </p>
-          {/*<span>name: {item.name}</span>*/}
-          {/*<span>term type: {item.searchType}</span>*/}
-          {/*<p>*/}
-          {/*  description:*/}
-          {/*  {item.description}*/}
-          {/*</p>*/}
-          {/*<span>heroism rate: {item.heroismRate} / 5</span>*/}
-          {/*/!*<ul>*!/*/}
-          {/*/!*  {item.recommendations.map((rec) => {*!/*/}
-          {/*/!*    return <li>{rec}</li>;*!/*/}
-          {/*/!*  })}*!/*/}
-          {/*/!*</ul>*!/*/}
-          {/*/!*<ul>*!/*/}
-          {/*/!*  {item.selectedHeroismMoments.map((moment) => {*!/*/}
-          {/*/!*    return <li>{moment}</li>;*!/*/}
-          {/*/!*  })}*!/*/}
-          {/*/!*</ul>*!/*/}
-          {/*{item.suitableForEducation}*/}
-        </Item>
+        <SearchResult item={item} />
       ))}
     </Grid>
   );
 };
 
 export default SearchResults;
+
+{
+  /* <Item key={item.id} open={open} onClick={onResultClick}>
+  <p>
+    name:{item.title}
+    <br />
+    type:{item.type}
+    <br />
+    description:
+    <br />
+    {item.plot}
+  </p>
+</Item>; */
+}

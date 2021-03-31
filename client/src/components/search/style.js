@@ -55,10 +55,10 @@ export const StyledButton = styled.button`
 `;
 
 export const StyledIcon = styled(SearchIcon)`
-  color: ${colors.DARK_BLUE};
+  color: ${colors.MAIN_BLUE};
   background-color: ${colors.LIGHT_GREY};
 
   &:hover {
-    color: ${colors.MAIN_BLUE};
+    color: ${colors.DARK_BLUE};
   }
 `;

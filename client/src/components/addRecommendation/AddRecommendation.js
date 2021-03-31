@@ -18,7 +18,7 @@ import {
   Select,
 } from "./style";
 
-export default function AddRecommendation({ props }) {
+export default function AddRecommendation({ item }) {
   const [open, setOpen] = useState(false);
   const { register, errors, handleSubmit } = useForm();
   const [indexes, setIndexes] = useState([]);
@@ -63,8 +63,8 @@ export default function AddRecommendation({ props }) {
         variant="outlined"
         style={{
           color: `${colors.DARK_BLUE}`,
-          marginLeft: "1.5%",
           backgroundColor: `${colors.GREY}`,
+          fontSize: "12px",
         }}
         onClick={handleClickOpen}
       >
@@ -83,7 +83,7 @@ export default function AddRecommendation({ props }) {
             color: `${colors.DARK_BLUE}`,
           }}
         >
-          Recommend "{props.title}" by {props.creator}
+          Recommend "{item.title}" by {item.creator}
         </DialogTitle>
         <DialogContent>
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -100,8 +100,7 @@ export default function AddRecommendation({ props }) {
             <Divider />
             <LabelWrapper>
               <Label>
-                Rate the level of bravery of the {props.searchType} (from 1 to
-                10)
+                Rate the level of bravery of the {item.type} (from 1 to 10)
               </Label>
               <Select
                 name="braveryRate"

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { SearchContainer, Input, StyledButton, StyledIcon } from "./style";
 import SearchResults from "../searchResults/SearchResults";
+import ResultContextProvider from "../../contexts/ResultContext";
 
 const searchResultsItems = [
   {
@@ -74,21 +75,23 @@ const Search = (props) => {
   }, [searchTerm]); */
 
   return (
-    <div>
-      <SearchContainer>
-        <Input
-          type="text"
-          name="search"
-          placeholder="search..."
-          value={searchTerm}
-          onChange={handleChange}
-        />
-        <StyledButton type="button" onClick={handleSearch}>
-          <StyledIcon />
-        </StyledButton>
-      </SearchContainer>
-      <SearchResults searchResults={searchResults} />
-    </div>
+    <ResultContextProvider>
+      <div>
+        <SearchContainer>
+          <Input
+            type="text"
+            name="search"
+            placeholder="search..."
+            value={searchTerm}
+            onChange={handleChange}
+          />
+          <StyledButton type="button" onClick={handleSearch}>
+            <StyledIcon />
+          </StyledButton>
+        </SearchContainer>
+        <SearchResults searchResults={searchResults} />
+      </div>
+    </ResultContextProvider>
   );
 };
 

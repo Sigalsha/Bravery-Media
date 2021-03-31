@@ -12,25 +12,22 @@ import { colors } from "../../styles/colors";
 //   border-color: ${colors.BLACK};
 // `;
 
-
-
 export const Item = styled.div`
   display: flex;
   justify-content: left;
   width: 100%;
-  padding: .5rem;
-  &:hover
-  {
+  padding: 0.5rem;
+  &:hover {
     background-color: #a1ffff;
   }
 `;
-
-
+//
 
 export const Grid = styled.div`
+  display: grid;
   width: 90%;
   padding-left: 10%;
-  display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-gap: 5px;  
+  grid-gap: 5px;
 `;
+// display: ${({ open }) => (open ? "none" : "grid")};
