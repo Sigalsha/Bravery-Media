@@ -41,7 +41,8 @@ def get_item_info(item_id):
 
 def search_favorites(category):
     media_list = repo.media.limited_find_by(type=category)
-    return _order_media_list(media_list, {})
+    all_results = _order_media_list_top(media_list, category)
+    return {'data': all_results}
 
 
 def add_review(item_id, rating, bravery_moments, content, reviewer):
@@ -110,4 +111,16 @@ def _add_recommendations(movie_id, data):
     for recommendation in reviews_obj_list:
         reviews.append(recommendation.review)
     data['recommendations'] = reviews
+
+
+def _order_media_list_top(media_list, category):
+    data_list = []
+    if category == "movie":
+        for movie in media_list:
+            data_list.append(get_item_info(movie.id))
+    elif category == "book":
+        for book in media_list:
+            data_list.append(get_item_info(book.id))
+    return data_list
+
 # endregion
