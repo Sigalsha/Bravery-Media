@@ -3,48 +3,48 @@ from Server.dbconnect import config
 
 
 class MovieResult:
-    def __init__(self, id, title, type, image, plot, creator, braveryRate, selectedHeroismMoments, recommendations,
-                 suitableForEducation):
+    def __init__(self, id, title, type, image, plot):
         self.id = id
         self.title = title
         self.type = type
         self.image = image
         self.plot = plot
-        self.creator = creator
-        self.braveryRate = braveryRate
-        self.selectedHeroismMoments = selectedHeroismMoments
-        self.recommendations = recommendations
-        self.suitableForEducation = suitableForEducation
 
 
 def search(text):
-    url = "{}/{}/{}".format(config.get_request['search_movie_url'], config.get_request['API_Key'], text)
-    r = requests.get(url=url, params=config.get_request['PARAMS'])
+    results = []
+    i = 1
+    while len(results) < 4 and i < 3:
+        results = results + (search_page(text, i))
+        i = i + 1
+    return results
+
+
+def search_page(text, page):
+    url = config.get['search_movie_url'].format(config.get['API_Key'], text, page)
+    r = requests.get(url=url, params=config.get['PARAMS'])
     results = json.loads(json.dumps(r.json()['results']))
-    detailed_results = map(lambda m: get_movie(m['id']), results)
-    relevant_results = list(filter(is_movie_relevant, detailed_results))
-    return list(map(dict_to_object, relevant_results))
+    results_with_keywords = map(lambda m: add_keywords(m), results)
+    relevant_results = list(filter(is_movie_relevant, results_with_keywords))
+    return list(map(lambda m: dict_to_object(m), relevant_results))
 
 
-def get_movie(movie_id):
-    url = "{}/{}/{}".format(config.get_request['get_movie_url'], config.get_request['API_Key'], movie_id)
-    r = requests.get(url=url, params=config.get_request['PARAMS'])
-    movie_detailed = json.loads(json.dumps(r.json()))
-    return movie_detailed
+def add_keywords(movie):
+    url = config.get['movie_keywords_url'].format(movie['id'], config.get['API_Key'])
+    r = requests.get(url=url, params=config.get['PARAMS'])
+    movie['keywords'] = json.loads(json.dumps(r.json()['keywords']))
+    return movie
 
 
 def is_movie_relevant(movie):
-    if any(s in movie['plot'].lower() for s in config.related_keywords) | \
-            any(s in movie['keywords'].lower() for s in config.related_keywords):
+    if any(s in movie['keywords'] for s in config.relevant_keywords):
         return True
-    contained_secondary_keywords = list(filter(lambda s: s in movie['plot'].lower(), config.related_keywords2))
-    if len(contained_secondary_keywords) > 1:
-        return True
-    contained_secondary_keywords = list(filter(lambda s: s in movie['keywords'].lower(), config.related_keywords3))
+    contained_secondary_keywords = list(filter(lambda s: s in movie['keywords'], config.relevant_keywords2))
     if len(contained_secondary_keywords) > 1:
         return True
     return False
 
 
 def dict_to_object(m):
-    return MovieResult(m['id'], m['title'], "Movie", m['image'], m['plot'], m['directors'], None, None, None, None)
+    return MovieResult(m['id'], m['title'], "Movie", "https://www.themoviedb.org/t/p/w1280" + m['poster_path'],
+                       m['overview'])
