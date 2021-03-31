@@ -6,6 +6,7 @@ import datetime, uuid, sys
 
 max_int = 2147483647
 
+
 def search_by_type(item_type, keywords):
     data_list = []
     if item_type == "movie":
@@ -119,10 +120,14 @@ def _order_media_list_top(media_list, category):
     data_list = []
     if category == "movie":
         for movie in media_list:
-            data_list.append(get_item_info(movie.id))
+            item_data = get_item_info(movie.id)
+            if item_data:
+                data_list.append(item_data)
     elif category == "book":
         for book in media_list:
-            data_list.append(get_item_info(book.id))
+            item_data = get_item_info(book.id)
+            if item_data:
+                data_list.append(item_data)
     return data_list
 
 

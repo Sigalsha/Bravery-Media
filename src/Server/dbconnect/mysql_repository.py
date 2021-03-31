@@ -60,10 +60,10 @@ class _Repository:
         id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
         media_id INTEGER NOT NULL,
         start INTEGER NOT NULL,
-        FOREIGN KEY(media_id) REFERENCES bm_medias(id)
+        FOREIGN KEY(media_id) REFERENCES bm_medias(id) ON DELETE CASCADE
         );
         """)
-
+    #  ON DELETE CASCADE
     def drop_tables(self):
         for table_name in config.table_names:
             self.cursor.execute("""
