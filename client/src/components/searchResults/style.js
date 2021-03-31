@@ -10,7 +10,7 @@ export const Item = styled.div`
     background-color: ${colors.HOVER_COLOR_1}.;
   }
 `;
-//
+
 
 export const Grid = styled.div`
   display: ${({ resultOpen }) => (resultOpen ? "none" : "grid")};
