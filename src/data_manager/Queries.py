@@ -2,7 +2,7 @@ from Server.dbconnect.mysql_repository import repo
 from Server.dbconnect.daos import *
 from Server.dbconnect.movies import imdb_conn
 from Server.dbconnect.books import google_books_conn as book_conn
-import datetime, uuid, sys
+import datetime, uuid
 
 max_int = 2147483647
 
@@ -23,18 +23,20 @@ def get_item_info(item_id):
     if media_list:
         media = media_list[0]
         if media.media_type == "movie":
-            movie_list = imdb_conn.search(media.name)
-            if movie_list:
-                movie = movie_list[0]
+            # movie_list = imdb_conn.search(media.name)
+            movie = imdb_conn.get_movie(media.id)
+            # if movie_list:
+            if movie:
                 movie_data = vars(movie)
                 _update_movie_db(movie)
                 _add_data_to_media(movie.id, movie_data)
                 return movie_data
         elif media.media_type == "book":
-            books = book_conn.search(media.name)
+            # books = book_conn.search(media.name)
             book_id = _get_book_id(media)
             # search for the right book
-            book = _find_book_by_id(book_id, books)
+            # book = _find_book_by_id(book_id, books)
+            book = book_conn.get_book(book_id)
             if book:
                 book_data = vars(book)
                 _add_data_to_media(media.id, book_data)
