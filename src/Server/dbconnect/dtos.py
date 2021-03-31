@@ -8,26 +8,26 @@ class Review:
         self.reviewer = reviewer
 
     def get_sorted_vars(self):
-        return[self.id, self.media_id, self.date, self.rating, self.review, self.reviewer]
-
+        return [self.id, self.media_id, self.date, self.rating, self.review, self.reviewer]
 
 class User:
     def __init__(self, name, user_type, id=None):
         self.id = id
         self.name = name
-        self.type = user_type
+        self.user_type = user_type
 
     def get_sorted_vars(self):
-        return[self.id, self.name, self.user_type]
+        return [self.id, self.name, self.user_type]
+
 
 class Media:
     def __init__(self, name, media_type, id=None):
         self.id = id
         self.name = name
-        self.type = media_type
+        self.media_type = media_type
 
     def get_sorted_vars(self):
-            return[self.id, self.name, self.media_type]
+        return [self.id, self.name, self.media_type]
 
 
 class BraveryMoment:
