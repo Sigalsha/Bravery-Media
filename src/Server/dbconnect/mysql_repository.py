@@ -11,10 +11,11 @@ class _Repository:
                                       user= config.remote_db_username,
                                       passwd= config.remote_db_password,
                                       db= config.remote_db_database)
-        self.users = _Users(self._conn)
-        self.reviews = _Reviews(self._conn)
-        self.media = _Medias(self._conn)
-        self.braveryMoment = _BraveryMoments(self._conn)
+        self.cursor = self._conn.cursor()
+        self.users = _Users(self.cursor)
+        self.reviews = _Reviews(self.cursor)
+        self.media = _Medias(self.cursor)
+        self.braveryMoment = _BraveryMoments(self.cursor)
 
     def _close(self):
         self._conn.commit()
@@ -25,30 +26,30 @@ class _Repository:
     """
 
     def create_tables(self):
-        self._conn.executescript("""
+        self.cursor.execute("""
         CREATE TABLE IF NOT EXISTS users(
         id INTEGER PRIMARY KEY,
         username TEXT NOT NULL,
         type TEXT NOT NULL
-        );
-
+        );""")
+        self.cursor.execute("""
         CREATE TABLE IF NOT EXISTS reviews(
         id INTEGER PRIMARY KEY,
-        media_id NOT NULL,
+        media_id INTEGER NOT NULL,
         review TEXT NOT NULL,
         reviewer INTEGER NOT NULL,
         date DATE NOT NULL,
         rating INTEGER NOT NULL,
-        FOREIGN KEY(reviewer) REFERENCES users(id)
+        FOREIGN KEY(reviewer) REFERENCES users(id),
         FOREIGN KEY(media_id) REFERENCES media(id)
-        );
-
+        );""")
+        self.cursor.execute("""
         CREATE TABLE IF NOT EXISTS medias(
         id INTEGER PRIMARY KEY,
         name TEXT NOT NULL,
         type TEXT NOT NULL
-        );
-
+        );""")
+        self.cursor.execute("""
         CREATE TABLE IF NOT EXISTS braveryMoments(
         id INTEGER PRIMARY KEY,
         media_id INTEGER NOT NULL,
@@ -59,7 +60,7 @@ class _Repository:
 
     def drop_tables(self):
         for table_name in config.table_names:
-            self._conn.executescript("""
+            self.cursor.execute("""
                     DROP TABLE IF EXISTS {}
                     );
                     """.format(table_name))
