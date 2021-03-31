@@ -1,14 +1,16 @@
 import atexit
-import sqlite3
+import MySQLdb
 from Server.dbconnect.daos import _Users, _Reviews, _Medias, _BraveryMoments
 import Server.dbconnect.dbconfig as config
-
 
 
 class _Repository:
     def __init__(self):
         # replace with AWS db location
-        self._conn = sqlite3.connect('database.db')
+        self._conn = MySQLdb.connect( host= config.remote_db_hostname,
+                                      user= config.remote_db_username,
+                                      passwd= config.remote_db_password,
+                                      db= config.remote_db_database)
         self.users = _Users(self._conn)
         self.reviews = _Reviews(self._conn)
         self.media = _Medias(self._conn)
@@ -35,18 +37,18 @@ class _Repository:
         media_id NOT NULL,
         review TEXT NOT NULL,
         reviewer INTEGER NOT NULL,
-        rating INTEGER NOT NULL,
         date DATE NOT NULL,
+        rating INTEGER NOT NULL,
         FOREIGN KEY(reviewer) REFERENCES users(id)
         FOREIGN KEY(media_id) REFERENCES media(id)
         );
-        
+
         CREATE TABLE IF NOT EXISTS medias(
         id INTEGER PRIMARY KEY,
         name TEXT NOT NULL,
         type TEXT NOT NULL
         );
-        
+
         CREATE TABLE IF NOT EXISTS braveryMoments(
         id INTEGER PRIMARY KEY,
         media_id INTEGER NOT NULL,
