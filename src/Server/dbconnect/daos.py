@@ -15,6 +15,7 @@ class _Reviews:
     def insert(self, review):
         self._curr.execute("""
         INSERT INTO reviews (media_id, date, rating, review, reviewer) VALUES (%s, %s, %s, %s)
+
         """, review.get_sorted_vars()[1:])
 
     def find_by(self, **keyvals):
@@ -55,8 +56,8 @@ class _Reviews:
     def get_average_rating(self, media_id):
         c = self._curr
         c.execute("""
-               SELECT avg(rating) FROM reviews Where media_id =%s
-               """, (str(media_id),))
+               SELECT avg(rating) FROM reviews Where media_id ={}
+               """.format(media_id))
         return c.fetchone()[0]
 
 
@@ -66,9 +67,8 @@ class _Users:
 
     def insert(self, user):
         self._curr.execute("""
-        INSERT INTO users (id, name, type) VALUES (%s, %s, %s)
-        """, user.get_sorted_vars())
-
+        INSERT INTO users (name, type) VALUES (%s, %s)
+        """, user.get_sorted_vars()[1:)
 
     def find_by(self, **keyvals):
         column_names = keyvals.keys()
@@ -158,8 +158,8 @@ class _BraveryMoments:
 
     def insert(self, bravery_moment):
         self._curr.execute("""
-        INSERT INTO braveryMoments (id, media_id , start) VALUES (%s, %s, %s)
-        """, bravery_moment.get_sorted_vars)
+        INSERT INTO braveryMoments (media_id , start) VALUES (%s, %s)
+        """, bravery_moment.get_sorted_vars()[1:])
 
     def find_by(self, **keyvals):
         column_names = keyvals.keys()
