@@ -8,6 +8,7 @@ import { GlobalStyles } from "./styles/global";
 
 function App() {
   return (
+  <React.Fragment>
     <Router>
       <GlobalStyles />
       <Navbar />
@@ -18,6 +19,7 @@ function App() {
       <Route path="/songs" render={(props) => <Search {...props} />} />
       <Route path="/articles" render={(props) => <Search {...props} />} />
     </Router>
+  </React.Fragment>
   );
 }
 
