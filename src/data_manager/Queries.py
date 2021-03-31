@@ -1,6 +1,6 @@
 from Server.dbconnect.mysql_repository import repo
 from Server.dbconnect.daos import *
-from Server.dbconnect import imdb_conn
+from Server.dbconnect.movies import imdb_conn
 from Server.dbconnect.books import google_books_conn as book_conn
 import datetime, uuid
 
@@ -31,7 +31,7 @@ def get_item_info(item_id):
     elif media.media_type == "book":
         books = book_conn.search(media.name)
         for book in books:
-            data[book.id] = vars(book)
+            data[media.id] = vars(book)
             _update_book_db(book)
             _add_data_to_media(book, data[book.id])
     return data

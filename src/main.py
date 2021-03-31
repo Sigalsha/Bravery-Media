@@ -19,8 +19,8 @@ if __name__ == '__main__':
     # x1 = Queries.get_item_info(id1)
     # x2 = Queries.get_item_info(id2)
 
-    id1 = book1.keys()[0]
-    id2 = book2.keys()[0]
+    id1 = list(book1.keys())[0]
+    id2 = list(book2.keys())[0]
 
     Queries.add_review(id1, 8, 34, "aaa", 0)
     Queries.add_review(id1, 1, 354, "bbb", 0)
