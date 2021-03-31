@@ -15,7 +15,7 @@ def search_by_type(item_type, keywords):
 def get_item_info(item_id):
     data = {}
     media = repo.media.find_by(id=item_id)[0]
-    if media.type == "movie":
+    if media.media_type == "movie":
         movie_list = imdb_conn.search(media.name)
         for movie in movie_list:
             data[movie.id] = vars(movie)
@@ -30,9 +30,8 @@ def search_favorites(category):
 
 
 def add_review(item_id, rating, bravery_moments, content, reviewer):
-    import random
     repo.reviews.insert(Review(item_id, content, reviewer, rating, datetime.datetime.now()))
-    repo.braveryMoment.insert(BraveryMoment(random.randint(1,10000), item_id, bravery_moments))
+    repo.braveryMoment.insert(BraveryMoment(item_id, bravery_moments))
 
 
 # region private methods
@@ -49,7 +48,7 @@ def _order_media_list(movies_list, data):
 def _update_movie_db(movie):
     media = repo.media.find_by(id=movie.id)
     if not media:
-        repo.media.insert(Media(movie.id, movie.title, "movie"))
+        repo.media.insert(Media(movie.title, "movie", movie.id))
 
 
 def _add_data_to_movie(movie, data):
@@ -59,6 +58,9 @@ def _add_data_to_movie(movie, data):
 
 
 def _add_bravery_rate(movie_id, data):
+    #
+    l = repo.reviews.find_by(media_id=movie_id)
+    #
     rate = repo.reviews.get_average_rating(movie_id)
     if not rate:
         rate = "null"
