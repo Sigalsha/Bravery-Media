@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/Bravery-Media/static/css/main.6dea0f05.chunk.css",
+    "main.js": "/Bravery-Media/static/js/main.043a7129.chunk.js",
+    "main.js.map": "/Bravery-Media/static/js/main.043a7129.chunk.js.map",
+    "runtime-main.js": "/Bravery-Media/static/js/runtime-main.7a0f1f9a.js",
+    "runtime-main.js.map": "/Bravery-Media/static/js/runtime-main.7a0f1f9a.js.map",
+    "static/js/2.68d0230e.chunk.js": "/Bravery-Media/static/js/2.68d0230e.chunk.js",
+    "static/js/2.68d0230e.chunk.js.map": "/Bravery-Media/static/js/2.68d0230e.chunk.js.map",
+    "index.html": "/Bravery-Media/index.html",
+    "static/css/main.6dea0f05.chunk.css.map": "/Bravery-Media/static/css/main.6dea0f05.chunk.css.map",
+    "static/js/2.68d0230e.chunk.js.LICENSE.txt": "/Bravery-Media/static/js/2.68d0230e.chunk.js.LICENSE.txt",
+    "static/media/logo.d784ecbd.png": "/Bravery-Media/static/media/logo.d784ecbd.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.7a0f1f9a.js",
+    "static/js/2.68d0230e.chunk.js",
+    "static/css/main.6dea0f05.chunk.css",
+    "static/js/main.043a7129.chunk.js"
+  ]
+}
