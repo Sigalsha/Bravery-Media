@@ -68,7 +68,7 @@ class _Users:
     def insert(self, user):
         self._curr.execute("""
         INSERT INTO users (name, type) VALUES (%s, %s)
-        """, user.get_sorted_vars()[1:)
+        """, user.get_sorted_vars()[1:])
 
     def find_by(self, **keyvals):
         column_names = keyvals.keys()

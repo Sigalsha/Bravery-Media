@@ -19,8 +19,6 @@ class User:
     def get_sorted_vars(self):
         return [self.id, self.name, self.user_type]
 
-    def get_sorted_vars(self):
-        return[self.id, self.name, self.user_type]
 
 class Media:
     def __init__(self, name, media_type, id=None):
@@ -30,9 +28,6 @@ class Media:
 
     def get_sorted_vars(self):
         return [self.id, self.name, self.media_type]
-
-    def get_sorted_vars(self):
-            return[self.id, self.name, self.media_type]
 
 
 class BraveryMoment:
