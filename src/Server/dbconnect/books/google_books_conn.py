@@ -1,6 +1,6 @@
 import json, requests
 
-google_api_key = "AIzaSyAEfzq99KQOFj_LLuo0SIojpg6ub8QniYw"
+google_api_key = ""
 
 
 def search_by_keyword(keyword):
