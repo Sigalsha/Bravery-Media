@@ -17,26 +17,26 @@ def search_by_type(item_type, keywords):
 
 
 def get_item_info(item_id):
-    data_list = []
     media_list = repo.media.find_by(id=item_id)
-    if not media_list:
-        return data_list
-    media = media_list[0]
-    if media.media_type == "movie":
-        movie_list = imdb_conn.search(media.name)
-        for movie in movie_list:
-            movie_data = vars(movie)
-            _update_movie_db(movie)
-            _add_data_to_media(movie, movie_data)
-            data_list.append(movie_data)
-    elif media.media_type == "book":
-        books = book_conn.search(media.name)
-        for book in books:
-            book_data = vars(book)
-            _update_book_db(book)
-            _add_data_to_media(book, book_data)
-            data_list.append(book_data)
-    return data_list
+    if media_list:
+        media = media_list[0]
+        if media.media_type == "movie":
+            movie_list = imdb_conn.search(media.name)
+            if movie_list:
+                movie = movie_list[0]
+                movie_data = vars(movie)
+                _update_movie_db(movie)
+                _add_data_to_media(movie, movie_data)
+                return movie_data
+        elif media.media_type == "book":
+            books = book_conn.search(media.name)
+            if books:
+                book = books[0]
+                book_data = vars(book)
+                _update_book_db(book)
+                _add_data_to_media(book, book_data)
+                return book_data
+    return {}
 
 
 def search_favorites(category):
