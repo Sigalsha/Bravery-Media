@@ -8,10 +8,7 @@ def search_by_type(item_type, keywords):
     data = {}
     if item_type == "movie":
         movies_list = imdb_conn.search(keywords)
-        for movie in movies_list:
-            data[movie.id] = vars(movie)
-            _update_movie_db(movie)
-            _add_bravery_rate(movie, data[movie.id])
+        _order_media_list(movies_list, data)
     return data
 
 
@@ -28,8 +25,8 @@ def get_item_info(item_id):
 
 
 def search_favorites(category):
-    # TODO: need to add limit to media table
-    repo.media.find_by(type=category)
+    media_list = repo.media.limited_find_by(type=category)
+    return _order_media_list(media_list, {})
 
 
 def add_review(item_id, rating, bravery_moments, content, reviewer):
@@ -37,6 +34,14 @@ def add_review(item_id, rating, bravery_moments, content, reviewer):
 
 
 # region private methods
+
+
+def _order_media_list(movies_list, data):
+    for movie in movies_list:
+        data[movie.id] = vars(movie)
+        _update_movie_db(movie)
+        _add_bravery_rate(movie, data[movie.id])
+    return data
 
 
 def _update_movie_db(movie):
