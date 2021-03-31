@@ -60,7 +60,7 @@ def _order_media_list(movies_list, data):
 
 def _order_books_list(books_list, data):
     for book in books_list:
-        book.id = uuid.uuid1().int % 5000
+        # book.id = uuid.uuid1().int % 5000
         data[book.id] = vars(book)
         _update_book_db(book)
         _add_bravery_rate(book.id, data[book.id])
@@ -105,6 +105,16 @@ def _add_recommendations(movie_id, data):
     for recommendation in reviews_obj_list:
         reviews.append(recommendation.review)
     data['recommendations'] = reviews
+
+
+def _convert_str_id_to_int(str_id):
+    str_num = ""
+    for c in str_id:
+        str_num += str(ord(c))
+    return int(str_num)
+
+def _convert_int_id_to_str():
+    None
 
 # endregion
 
