@@ -159,7 +159,7 @@ class _BraveryMoments:
     def insert(self, bravery_moment):
         self._conn.execute("""
         INSERT INTO braveryMoments (media_id , start) VALUES ( ?, ?)
-        """, bravery_moment.get_sorted_vars())
+        """, bravery_moment.get_sorted_vars()[1:])
 
     def find_by(self, **keyvals):
         column_names = keyvals.keys()
