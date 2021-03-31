@@ -24,7 +24,7 @@ def get_search_results():
 @app.route('/get_item', methods=['GET'])
 def get_item():
     item_id = request.args.get("item_id")
-    get_movie_info(item_id)
+    item_info = get_movie_info(item_id)
     return json.dumps(item_info)
 
 
@@ -35,15 +35,8 @@ def add_recommendation():
     bravery_moments = recommendation.selectedHeroismMoments
     content = recommendation.recommendation
     reviewer = recommendation.recommenderName
-    add_review(item_id, bravery_moments, content, reviewer)
-
-
-@app.route('/add_heroism_rate', methods=['POST'])
-def add_heroism_rate():
-    rating = request.json
-    item_id = rating.id
-    item_rating = rating.heroism_rate
-    add_rating(item_id, item_rating)
+    item_rating = recommendation.braveryRate
+    add_review(item_id, bravery_moments, content, reviewer, item_rating)
 
 
 if __name__ == '__main__':
