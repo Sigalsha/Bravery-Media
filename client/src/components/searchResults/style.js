@@ -14,7 +14,7 @@ export const Item = styled.div`
 export const Grid = styled.div`
   display: ${({ resultOpen }) => (resultOpen ? "none" : "grid")};
   width: 90%;
-  margin: 0 5%;
+  margin: 0 5% 2% 5%;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 2%;
 `;

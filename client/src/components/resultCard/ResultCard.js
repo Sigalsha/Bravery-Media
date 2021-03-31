@@ -20,9 +20,6 @@ import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import { fontSizes } from "../../styles/typography";
 
-const imgUrl =
-  "https://www.themoviedb.org/t/p/w1280/sF1U4EUQS8YHUYjNl3pMGNIQyr0.jpg";
-
 const styles = (theme) => ({
   root: {
     margin: 0,
@@ -68,7 +65,7 @@ const DialogActions = withStyles((theme) => ({
 }))(MuiDialogActions);
 
 const ResultCard = ({ item, bookData }) => {
-  const img = bookData.volumeInfo.imageLinks.thumbnail;
+  // const img = bookData.volumeInfo.imageLinks.thumbnail;
   const [open, setOpen] = React.useState(false);
   console.log(bookData);
 
@@ -93,7 +90,7 @@ const ResultCard = ({ item, bookData }) => {
         maxWidth="xl"
       >
         <HeaderWrapper>
-          {img && <ImgElement src={img} />}
+          {item.image && <ImgElement src={item.image} />}
           <DialogTitle
             id="customized-dialog-title"
             onClose={handleClose}
@@ -102,7 +99,7 @@ const ResultCard = ({ item, bookData }) => {
               marginRight: "auto",
               color: `${colors.MAIN_BLUE}`,
               fontSize: "2.25rem",
-              minWidth: "30vw",
+              minWidth: "20vw",
             }}
           >
             {item.title}

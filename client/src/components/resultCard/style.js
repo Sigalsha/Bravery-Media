@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { colors } from "../../styles/colors";
 import { fontSizes } from "../../styles/typography";
+import { device } from "../../styles/devices";
 import Typography from "@material-ui/core/Typography";
 
 export const Wrapper = styled.div``;
@@ -16,12 +17,28 @@ export const HeaderWrapper = styled.div`
 `;
 
 export const ImgElement = styled.img`
-  height: 20vh;
-  width: 15vw;
+  height: 15vh;
+  width: 10vw;
   margin-right: 2%;
-  @media (max-width: 480px) {
-    height: 120px;
-    width: 120px;
+
+  @media ${device.mobileS} {
+    height: 15vh;
+    width: 25vw;
+  }
+
+  @media ${device.mobileL} {
+    height: 15vh;
+    width: 25vw;
+  }
+
+  @media ${device.tablet} {
+    height: 15vh;
+    width: 10vw;
+  }
+
+  @media ${device.laptop} {
+    height: 20vh;
+    width: 10vw;
   }
 `;
 

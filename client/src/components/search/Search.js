@@ -34,7 +34,7 @@ const searchResultsItems = [
     type: "Movie",
     creator: "Steven Spielberg",
     image:
-      "https://imdb-api.com/images/original/MV5BNDE4OTMxMTctNmRhYy00NWE2LTg3YzItYTk3M2UwOTU5Njg4XkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_Ratio0.6791_AL_.jpg",
+      "https://www.themoviedb.org/t/p/w1280/3DzePKMbLMIM636S6syCy3cLPqj.jpg",
     plot:
       "A Polish Jewish musician struggles to survive the destruction of the Warsaw ghetto of World War II.",
     braveryRate: 8,
@@ -48,7 +48,7 @@ const searchResultsItems = [
     type: "Movie",
     creator: "Steven Spielberg",
     image:
-      "https://imdb-api.com/images/original/MV5BNDE4OTMxMTctNmRhYy00NWE2LTg3YzItYTk3M2UwOTU5Njg4XkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_Ratio0.6791_AL_.jpg",
+      "https://www.themoviedb.org/t/p/w1280/74hLDKjD5aGYOotO6esUVaeISa2.jpg",
     plot:
       "When an open-minded Jewish librarian and his son become victims of the Holocaust, he uses a perfect mixture of will, humor, and imagination to protect his son from the dangers around their camp.",
     braveryRate: 7,

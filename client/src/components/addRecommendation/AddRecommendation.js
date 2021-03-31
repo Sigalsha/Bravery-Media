@@ -28,13 +28,15 @@ export default function AddRecommendation({ item }) {
 
   const onSubmit = (data) => {
     console.log(data);
-    if (errors === [] && selectVal !== "") {
+    console.log(errors);
+    console.log(selectVal);
+    if (errors === {} && selectVal !== "") {
       setIndexes([]);
       setCounter(0);
       // organize json data for server
       // send data to server
-      setOpen(false);
     }
+    setOpen(false);
   };
   console.log("errors", errors);
 
@@ -108,7 +110,7 @@ export default function AddRecommendation({ item }) {
                 ref={register({ required: true })}
                 onChange={(e) => setSelectVal(e.currentTarget.value)}
               >
-                <option disabled selected value>
+                <option disabled value defaultValue>
                   select a rate level
                 </option>
                 <option value="1">1</option>
@@ -185,30 +187,38 @@ export default function AddRecommendation({ item }) {
             <LabelWrapper>
               <Label>Is it suitable for education purpose?</Label>
               <RadioWrapper>
-                <Label for="suitableForEducation">Yes</Label>
-                <RadioInput
-                  name="suitableForEducation"
-                  id="suitableForEducation"
-                  type="radio"
-                  value="Yes"
-                  ref={register({ required: true })}
-                />
+                <Label>
+                  Yes
+                  <RadioInput
+                    name="suitableForEducation"
+                    id="suitableForEducation"
+                    type="radio"
+                    value="Yes"
+                    ref={register({ required: true })}
+                  />
+                </Label>
               </RadioWrapper>
               <RadioWrapper>
-                <Label for="notSuitableForEducation">No</Label>
-                <RadioInput
-                  name="suitableForEducation"
-                  id="notSuitableForEducation"
-                  type="radio"
-                  value="No"
-                  ref={register({ required: true })}
-                />
+                <Label>
+                  No
+                  <RadioInput
+                    name="suitableForEducation"
+                    id="notSuitableForEducation"
+                    type="radio"
+                    value="No"
+                    ref={register({ required: true })}
+                  />
+                </Label>
               </RadioWrapper>
               {errors.suitableForEducation && (
                 <ErrorAlert>please choose an answer</ErrorAlert>
               )}
             </LabelWrapper>
-            <Input type="submit" isSubmit={true} />
+            <Input
+              type="submit"
+              isSubmit={true}
+              style={{ cursor: "pointer" }}
+            />
           </form>
         </DialogContent>
         <DialogActions>

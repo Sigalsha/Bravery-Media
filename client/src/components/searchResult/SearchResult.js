@@ -23,11 +23,10 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: "Roboto",
   },
   media: {
-    height: 0,
-    paddingTop: "21.1875%", // 16:9
-    //
-    // 28.25%
-    backgroundSize: "auto",
+    /* paddingTop: "21.1875%", // 16:9 */
+    height: "15vh",
+    /*     width: "15vw", */
+    backgroundSize: "contain",
   },
   expand: {
     transform: "rotate(0deg)",
@@ -59,7 +58,7 @@ export default function SearchResult({ item, bookData }) {
     setResultCard(true);
   };
 
-  useEffect(() => {
+  /*   useEffect(() => {
     const fetchData = async () => {
       try {
         setIsLoading(true);
@@ -74,7 +73,7 @@ export default function SearchResult({ item, bookData }) {
 
     fetchData();
     return () => setIsLoading(false);
-  }, []);
+  }, []); */
 
   return (
     <div>
@@ -84,11 +83,11 @@ export default function SearchResult({ item, bookData }) {
 
       <Container>
         <Card className={classes.root}>
-          <CardHeader title={item.title} />
-          {!isLoading && imgData && (
+          <CardHeader title={item.title} style={{ textAlign: "center" }} />
+          {!isLoading && item.image && (
             <CardMedia
               className={classes.media}
-              image={imgData}
+              image={item.image}
               title={item.title}
             />
           )}
