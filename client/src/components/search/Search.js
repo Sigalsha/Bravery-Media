@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import SearchIcon from "@material-ui/icons/Search";
-import { SearchContainer, Input, StyledButton } from "./style";
+import { SearchContainer, Input, StyledButton, StyledIcon } from "./style";
 import { colors } from "../../styles/colors";
 import SearchResults from "../searchResults/SearchResults";
 
@@ -58,8 +57,8 @@ const classes = {
     marginTop: "1%",
   },
   icon: {
-    margin: "1%",
-    backgroundColor: `${colors.MAIN_BLUE}`,
+    color: `${colors.DARK_BLUE}`,
+    backgroundColor: `${colors.LIGHT_GREY}`,
   },
 };
 
@@ -90,8 +89,8 @@ const Search = (props) => {
   return (
     <div>
       <SearchContainer>
-        <input
-          style={classes.input}
+        <Input
+          /*  style={classes.input} */
           type="text"
           name="search"
           placeholder="search..."
@@ -99,7 +98,7 @@ const Search = (props) => {
           onChange={handleChange}
         />
         <StyledButton type="button" onClick={handleSearch}>
-          <SearchIcon style={classes.icon} />
+          <StyledIcon />
         </StyledButton>
       </SearchContainer>
       <SearchResults searchResults={searchResults} />
