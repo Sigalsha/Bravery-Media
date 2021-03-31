@@ -10,7 +10,7 @@ class _Repository:
         self._conn = MySQLdb.connect( host= config.remote_db_hostname,
                                       user= config.remote_db_username,
                                       passwd= config.remote_db_password,
-                                      db= config.remote_db_hostname)
+                                      db= config.remote_db_database)
         self.users = _Users(self._conn)
         self.reviews = _Reviews(self._conn)
         self.media = _Medias(self._conn)

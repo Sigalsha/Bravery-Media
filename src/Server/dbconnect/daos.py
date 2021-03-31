@@ -115,7 +115,7 @@ class _Medias:
         column_names = keyvals.keys()
         params = keyvals.values()
 
-        stmt = 'SELECT * FROM medias WHERE {}'.format(' AND '.join([col + '=?' for col in column_names]))
+        stmt = "SELECT * FROM medias WHERE {}".format(' AND '.join([col + '=?' for col in column_names]))
 
         c = self._conn.cursor()
         c.execute(stmt, list(params))
