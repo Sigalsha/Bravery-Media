@@ -15,14 +15,15 @@ def search_by_type(item_type, keywords):
     return data
 
 
-def get_movie_info(item_id):
+def get_item_info(item_id):
     data = {}
     media = repo.media.find_by(id=item_id)[0]
-    movie_list = imdb_conn.search(media.name)
-    for movie in movie_list:
-        data[movie.id] = vars(movie)
-        _update_movie_db(movie)
-        _add_data_to_movie(movie, data)
+    if media.type == "movie":
+        movie_list = imdb_conn.search(media.name)
+        for movie in movie_list:
+            data[movie.id] = vars(movie)
+            _update_movie_db(movie)
+            _add_data_to_movie(movie, data)
     return data
 
 
@@ -31,16 +32,9 @@ def search_favorites(category):
     repo.media.find_by(type=category)
 
 
-def add_review(item_id, bravery_moments, content, reviewer):
-    # TODO: need to remove reviewer from the review
-    review = Review(item_id, content, reviewer, bravery_moments, datetime.datetime.now())
-    repo.reviews.insert()
+def add_review(item_id, rating, bravery_moments, content, reviewer):
+    repo.reviews.insert(Review(item_id, content, reviewer, rating, datetime.datetime.now()))
 
-
-def add_rating(item_id, rating):
-    # TODO: need to remove reviewer
-    review = Review(item_id, "", None, rating, datetime.datetime.now())
-    repo.reviews.insert(review)
 
 # region private methods
 
