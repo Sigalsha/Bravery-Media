@@ -13,7 +13,7 @@ class MovieResult:
 def search(text):
     results = []
     i = 1
-    while len(results) < 4 and i < 3:
+    while (len(results) < 4 and i < 3) or (len(results) == 0 and i < 9):
         results = results + (search_page(text, i))
         i = i + 1
     return results
