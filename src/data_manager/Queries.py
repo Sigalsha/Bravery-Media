@@ -2,7 +2,7 @@ from Server.dbconnect.mysql_repository import repo
 from Server.dbconnect.daos import *
 from Server.dbconnect import imdb_conn
 from Server.dbconnect.books import google_books_conn as book_conn
-import datetime
+import datetime, uuid
 
 
 def search_by_type(item_type, keywords):
@@ -60,9 +60,10 @@ def _order_media_list(movies_list, data):
 
 def _order_books_list(books_list, data):
     for book in books_list:
+        book.id = uuid.uuid1().int % 5000
         data[book.id] = vars(book)
         _update_book_db(book)
-        _add_bravery_rate(book, data[book.id])
+        _add_bravery_rate(book.id, data[book.id])
 
 
 def _update_movie_db(movie):
