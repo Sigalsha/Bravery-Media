@@ -24,7 +24,7 @@ def get_search_results():
 @app.route('/get_item', methods=['GET'])
 def get_item():
     item_id = request.args.get("item_id")
-    item_info = get_movie_info(item_id)
+    item_info = get_item_info(item_id)
     return json.dumps(item_info)
 
 
