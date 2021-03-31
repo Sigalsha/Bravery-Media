@@ -21,7 +21,7 @@ export const H1Element = styled.h1`
 export const Logo = styled.img`
   height: 9vh;
   width: 16vw;
-  margin: 1.5%;
+  margin: 1%;
 
   @media ${device.mobileS} {
     height: 5vw;
