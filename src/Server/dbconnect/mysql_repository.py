@@ -36,7 +36,7 @@ class _Repository:
         self.cursor.execute("""
         CREATE TABLE IF NOT EXISTS bm_idMap(
         uuid INTEGER PRIMARY KEY,
-        string_id TEXT NOT NULL,
+        string_id TEXT NOT NULL
         );""")
         self.cursor.execute("""
         CREATE TABLE IF NOT EXISTS bm_medias(

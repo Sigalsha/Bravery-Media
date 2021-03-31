@@ -2,14 +2,15 @@ from Server.dbconnect.mysql_repository import repo
 from Server.dbconnect.daos import *
 from Server.dbconnect.movies import imdb_conn
 from Server.dbconnect.books import google_books_conn as book_conn
-import datetime, uuid
+import datetime, uuid, sys
 
+max_int = 2147483647
 
 def search_by_type(item_type, keywords):
     data_list = []
     if item_type == "movie":
         movies_list = imdb_conn.search(keywords)
-        _order_media_list(movies_list, data_list)
+        _order_movie_list(movies_list, data_list)
     elif item_type == "book":
         books_list = book_conn.search(keywords)
         _order_books_list(books_list, data_list)
@@ -30,8 +31,10 @@ def get_item_info(item_id):
                 return movie_data
         elif media.media_type == "book":
             books = book_conn.search(media.name)
-            if books:
-                book = books[0]
+            book_id = _get_book_id(media)
+            # search for the right book
+            book = _find_book_by_id(book_id, books)
+            if book:
                 book_data = vars(book)
                 _update_book_db(book)
                 _add_data_to_media(book, book_data)
@@ -53,21 +56,21 @@ def add_review(item_id, rating, bravery_moments, content, reviewer):
 # region private methods
 
 
-def _order_media_list(movies_list, data_list):
+def _order_movie_list(movies_list, data_list):
     for movie in movies_list:
         media_data = vars(movie)
         _update_movie_db(movie)
-        _add_bravery_rate(movie.id, media_data)
+        _add_data_to_media(movie, media_data)
         data_list.append(media_data)
     return data_list
 
 
 def _order_books_list(books_list, data_list):
     for book in books_list:
-        book.id = uuid.uuid1().int % 5000
+        _generate_book_id(book)
         book_data = vars(book)
         _update_book_db(book)
-        _add_bravery_rate(book.id, book_data)
+        _add_data_to_media(book, book_data)
         data_list.append(book_data)
     return data_list
 
@@ -84,10 +87,10 @@ def _update_book_db(book):
         repo.media.insert(Media(book.title, "book", book.id))
 
 
-def _add_data_to_media(movie, data):
-    _add_bravery_rate(movie.id, data)
-    _add_heroism_moments(movie.id, data)
-    _add_recommendations(movie.id, data)
+def _add_data_to_media(media, data):
+    _add_bravery_rate(media.id, data)
+    _add_heroism_moments(media.id, data)
+    _add_recommendations(media.id, data)
 
 
 def _add_bravery_rate(media_id, data):
@@ -123,4 +126,24 @@ def _order_media_list_top(media_list, category):
             data_list.append(get_item_info(book.id))
     return data_list
 
+
+def _generate_book_id(book):
+    book_id = book.id
+    book_uuid = uuid.uuid1().int % max_int
+    repo.uuidMap.insert(UuidMap(book_uuid, book_id))
+    book.id = book_uuid
+
+
+def _get_book_id(book):
+    uuid_map = repo.uuidMap.find_by(uuid=book.id)
+    if not uuid_map:
+        raise Exception("book with id: {} not found in bravery-media db.".format(book.id))
+    return uuid_map[0].string_id
+
+
+def _find_book_by_id(book_id, books):
+    for book in books:
+        if book.id == book_id:
+            return book
+    return None
 # endregion
