@@ -1,6 +1,7 @@
 from Server.dbconnect.mysql_repository import repo
 from Server.dbconnect.daos import *
 from Server.dbconnect import imdb_conn
+from Server.dbconnect.books import google_books_conn as book_conn
 import datetime
 
 
@@ -9,6 +10,9 @@ def search_by_type(item_type, keywords):
     if item_type == "movie":
         movies_list = imdb_conn.search(keywords)
         _order_media_list(movies_list, data)
+    elif item_type == "book":
+        books_list = book_conn.search(keywords)
+        _order_books_list(books_list, data)
     return data
 
 
@@ -23,7 +27,13 @@ def get_item_info(item_id):
         for movie in movie_list:
             data[movie.id] = vars(movie)
             _update_movie_db(movie)
-            _add_data_to_movie(movie, data[movie.id])
+            _add_data_to_media(movie, data[movie.id])
+    elif media.media_type == "book":
+        books = book_conn.search(media.name)
+        for book in books:
+            data[book.id] = vars(book)
+            _update_book_db(book)
+            _add_data_to_media(book, data[book.id])
     return data
 
 
@@ -48,20 +58,33 @@ def _order_media_list(movies_list, data):
     return data
 
 
+def _order_books_list(books_list, data):
+    for book in books_list:
+        data[book.id] = vars(book)
+        _update_book_db(book)
+        _add_bravery_rate(book, data[book.id])
+
+
 def _update_movie_db(movie):
     media = repo.media.find_by(id=movie.id)
     if not media:
         repo.media.insert(Media(movie.title, "movie", movie.id))
 
 
-def _add_data_to_movie(movie, data):
+def _update_book_db(book):
+    media = repo.media.find_by(id=book.id)
+    if not media:
+        repo.media.insert(Media(book.title, "book", book.id))
+
+
+def _add_data_to_media(movie, data):
     _add_bravery_rate(movie.id, data)
     _add_heroism_moments(movie.id, data)
     _add_recommendations(movie.id, data)
 
 
-def _add_bravery_rate(movie_id, data):
-    rate = repo.reviews.get_average_rating(movie_id)
+def _add_bravery_rate(media_id, data):
+    rate = repo.reviews.get_average_rating(media_id)
     if not rate:
         rate = "null"
     data['braveryRate'] = rate
