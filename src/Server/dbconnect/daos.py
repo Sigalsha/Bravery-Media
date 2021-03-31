@@ -55,8 +55,8 @@ class _Reviews:
     def get_average_rating(self, media_id):
         c = self._conn.cursor()
         c.execute("""
-               SELECT avg(rating) FROM reviews Where media_id =?
-               """, (str(media_id),))
+               SELECT avg(rating) FROM reviews Where media_id ={}
+               """.format(media_id))
         return c.fetchone()[0]
 
 
