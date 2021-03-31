@@ -1,7 +1,7 @@
 get = {
     'google_api_key': "AIzaSyAEfzq99KQOFj_LLuo0SIojpg6ub8QniYw",
     'book_search_url': "https://www.googleapis.com/books/v1/volumes?",
-    'subjects': ["non", "History / Holocaust", "FICTION", "BIOGRAPHY & AUTOBIOGRAPHY",
+    'subjects': ["non", "History / Holocaust", "BIOGRAPHY & AUTOBIOGRAPHY", "FICTION",
                  "HISTORY / Jewish", "JUVENILE FICTION", "YOUNG ADULT FICTION"]
 }
 

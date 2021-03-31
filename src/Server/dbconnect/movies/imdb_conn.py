@@ -1,6 +1,6 @@
 import json
 import requests
-import Server.dbconnect.config as config
+import Server.dbconnect.movies.config as config
 
 
 class MovieResult:
