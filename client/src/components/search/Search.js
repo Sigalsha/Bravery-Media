@@ -1,11 +1,15 @@
-import React, { useState, useEffect, useContext } from "react";
-import { SearchContainer, Input, StyledButton, StyledIcon } from "./style";
-import SearchResults from "../searchResults/SearchResults";
-import ResultContextProvider from "../../contexts/ResultContext";
-import { ResultContext } from "../../contexts/ResultContext";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Loader from "react-loader-spinner";
 import { colors } from "../../styles/colors";
+import SearchResults from "../searchResults/SearchResults";
+import {
+  SearchContainer,
+  Input,
+  StyledButton,
+  StyledIcon,
+  SearchWrapper,
+} from "./style";
 
 const URL = "https://www.googleapis.com/books/v1/volumes/ux44DgAAQBAJ";
 
@@ -59,7 +63,6 @@ const Search = (props) => {
   console.log(searchType);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  const { onResultClick, resultOpen } = useContext(ResultContext);
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setErrorStat] = useState(false);
@@ -105,25 +108,27 @@ const Search = (props) => {
 
   return (
     <div>
-      <SearchContainer>
-        <Input
-          type="text"
-          name="search"
-          placeholder="search..."
-          value={searchTerm}
-          onChange={handleChange}
-        />
-        <StyledButton type="button" onClick={handleSearch}>
-          <StyledIcon />
-        </StyledButton>
-      </SearchContainer>
+      <SearchWrapper>
+        <SearchContainer>
+          <Input
+            type="text"
+            name="search"
+            placeholder="search..."
+            value={searchTerm}
+            onChange={handleChange}
+          />
+          <StyledButton type="button" onClick={handleSearch}>
+            <StyledIcon />
+          </StyledButton>
+        </SearchContainer>
+      </SearchWrapper>
       {isLoading ? (
-        <div id="loader">
+        <div style={{ textAlign: "center" }}>
           <Loader
             type="BallTriangle"
             color={colors.GREY}
-            height={300}
-            width={300}
+            height={200}
+            width={200}
           />
         </div>
       ) : (

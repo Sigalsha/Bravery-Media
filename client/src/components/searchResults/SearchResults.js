@@ -1,11 +1,8 @@
-import React, { useContext } from "react";
-import { ResultContext } from "../../contexts/ResultContext";
-import { Grid, Item } from "./style";
+import React from "react";
+import { Grid } from "./style";
 import SearchResult from "../searchResult/SearchResult";
 
 const SearchResults = ({ searchResults, bookData }) => {
-  const { onResultClick, resultOpen } = useContext(ResultContext);
-
   return (
     <Grid>
       {searchResults.map((item) => (

@@ -3,10 +3,9 @@ import Header from "./components/header/Header";
 import Navbar from "./components/navbar/Navbar";
 import Search from "./components/search/Search";
 import Landing from "./components/landing/Landing";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import { GlobalStyles } from "./styles/global";
 import ResultContextProvider from "./contexts/ResultContext";
-import ResultCard from "./components/resultCard/ResultCard";
 
 function App() {
   return (

@@ -1,25 +1,16 @@
-import React, { useContext } from "react";
-import { ResultContext } from "../../contexts/ResultContext";
-import CssBaseline from "@material-ui/core/CssBaseline";
-// import Typography from "@material-ui/core/Typography";
-import Container from "@material-ui/core/Container";
+import React from "react";
 import {
-  Wrapper,
   ImgElement,
   HeaderWrapper,
   Divider,
   LabelWrapper,
   Label,
   Text,
+  RecommendationWrapper,
 } from "./style";
-
 import { colors } from "../../styles/colors";
 import AddRecommendation from "../addRecommendation/AddRecommendation";
 import Dialog from "@material-ui/core/Dialog";
-// import DialogActions from "@material-ui/core/DialogActions";
-// import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-// import DialogTitle from "@material-ui/core/DialogTitle";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import MuiDialogTitle from "@material-ui/core/DialogTitle";
@@ -27,6 +18,7 @@ import MuiDialogContent from "@material-ui/core/DialogContent";
 import MuiDialogActions from "@material-ui/core/DialogActions";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
+import { fontSizes } from "../../styles/typography";
 
 const imgUrl =
   "https://www.themoviedb.org/t/p/w1280/sF1U4EUQS8YHUYjNl3pMGNIQyr0.jpg";
@@ -77,7 +69,6 @@ const DialogActions = withStyles((theme) => ({
 
 const ResultCard = ({ item, bookData }) => {
   const img = bookData.volumeInfo.imageLinks.thumbnail;
-  const { onResultClick, resultOpen } = useContext(ResultContext);
   const [open, setOpen] = React.useState(false);
   console.log(bookData);
 
@@ -102,47 +93,57 @@ const ResultCard = ({ item, bookData }) => {
         maxWidth="xl"
       >
         <HeaderWrapper>
+          {img && <ImgElement src={img} />}
           <DialogTitle
             id="customized-dialog-title"
             onClose={handleClose}
             style={{
               padding: "1% 0",
-              width: "90vw",
+              marginRight: "auto",
               color: `${colors.MAIN_BLUE}`,
+              fontSize: "2.25rem",
+              minWidth: "30vw",
             }}
           >
             {item.title}
           </DialogTitle>
-          {img && <ImgElement src={img} />}
-          <AddRecommendation item={item} />
+          <RecommendationWrapper>
+            <AddRecommendation item={item} />
+          </RecommendationWrapper>
         </HeaderWrapper>
 
         <DialogContent dividers style={{ marginLeft: "0.5%" }}>
           <LabelWrapper>
-            <Label>Type</Label>
+            <Label>Type:</Label>
             <Text>{item.type}</Text>
           </LabelWrapper>
           <Divider />
           {item.creator && (
             <LabelWrapper>
-              <Label>Creator</Label>
+              <Label>Creator:</Label>
               <Text>{item.creator}</Text>
             </LabelWrapper>
           )}
           <Divider />
           <LabelWrapper>
-            <Label>Bravery Rate</Label>
+            <Label>Bravery Rate:</Label>
             {item.braveryRate ? (
               <Text>{item.braveryRate}</Text>
             ) : (
               <Text>Be the first one to rate!</Text>
             )}
           </LabelWrapper>
-
+          <Divider />
           <LabelWrapper>
             <Label>Bravery Moments in the {item.type}:</Label>
             {item.selectedHeroismMoments ? (
-              <ul style={{ listStyleType: "none", margin: 0, padding: "0" }}>
+              <ul
+                style={{
+                  listStyleType: "none",
+                  margin: 0,
+                  padding: "0 0 0 2%",
+                }}
+              >
                 {item.selectedHeroismMoments &&
                   item.selectedHeroismMoments.map((moment, i) => (
                     <li key={i}>{moment}</li>
@@ -153,12 +154,14 @@ const ResultCard = ({ item, bookData }) => {
             )}
           </LabelWrapper>
           <Divider />
-
           <LabelWrapper>
-            <Label>Recommendations</Label>
+            <Label>Recommendations:</Label>
             {item.recommendations &&
               item.recommendations.map((rec, i) => (
-                <Text key={i} paragraph style={{ fontSize: "12px" }}>
+                <Text
+                  key={i}
+                  style={{ fontSize: `${fontSizes.fontS}`, display: "block" }}
+                >
                   {rec}
                 </Text>
               ))}
@@ -166,10 +169,21 @@ const ResultCard = ({ item, bookData }) => {
               <Text>Be the first one to recommend!</Text>
             )}
           </LabelWrapper>
-
+          <Divider />
           <LabelWrapper>
-            <Label isPlot={true}>Plot</Label>
-            <Text>{item.plot}</Text>
+            <Label isPlot={true}>Plot:</Label>
+            <Text isPlot={true} style={{ fontSize: `${fontSizes.fontS}` }}>
+              {item.plot}
+            </Text>
+          </LabelWrapper>
+          <Divider />
+          <LabelWrapper>
+            <Label>Is it suitable for education purpose?</Label>
+            {item.suitableForEducation === true ? (
+              <Text>yes</Text>
+            ) : (
+              <Text>no</Text>
+            )}
           </LabelWrapper>
         </DialogContent>
         <DialogActions>

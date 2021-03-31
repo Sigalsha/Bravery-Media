@@ -4,6 +4,12 @@ import { fontSizes } from "../../styles/typography";
 import { device } from "../../styles/devices";
 import SearchIcon from "@material-ui/icons/Search";
 
+export const SearchWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 2.5%;
+`;
+
 export const SearchContainer = styled.div`
   width: 25%;
   margin: 2%;

@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import Container from "@material-ui/core/Container";
 import { colors } from "../../styles/colors";
 import { fontSizes } from "../../styles/typography";
 import Typography from "@material-ui/core/Typography";
@@ -11,20 +10,23 @@ export const HeaderWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
-  margin: 1% 2% 1% 2.5%;
+
+  flex-wrap: wrap;
+  margin: 2.5%;
 `;
 
 export const ImgElement = styled.img`
-  height: 15vh;
-  width: 12vw;
-  :hover {
-    cursor: pointer;
-  }
+  height: 16vh;
+  width: 9vw;
+  margin-right: 2%;
   @media (max-width: 480px) {
     height: 120px;
     width: 120px;
   }
+`;
+
+export const RecommendationWrapper = styled.span`
+  margin-top: auto;
 `;
 
 export const LabelWrapper = styled.div`
@@ -54,5 +56,7 @@ export const Divider = styled.hr`
 export const Text = styled(Typography)`
   margin-bottom: 0;
   margin-top: 0.25%;
+  padding-top: 0.5%;
+  padding-left: ${({ isPlot }) => (isPlot ? "0" : "2%")};
   background-color: ${colors.TRANSPARENT};
 `;

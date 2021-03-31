@@ -3,9 +3,8 @@ import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { colors } from "../../styles/colors";
 import {
   LabelWrapper,
@@ -16,6 +15,8 @@ import {
   Textarea,
   Divider,
   Select,
+  RadioWrapper,
+  RadioInput,
 } from "./style";
 
 export default function AddRecommendation({ item }) {
@@ -74,7 +75,7 @@ export default function AddRecommendation({ item }) {
         open={open}
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
-        maxWidth="90vw"
+        maxWidth="xl"
       >
         <DialogTitle
           style={{
@@ -178,6 +179,33 @@ export default function AddRecommendation({ item }) {
               />
               {errors.recommendationDesc && (
                 <ErrorAlert>please add your recommendation</ErrorAlert>
+              )}
+            </LabelWrapper>
+            <Divider />
+            <LabelWrapper>
+              <Label>Is it suitable for education purpose?</Label>
+              <RadioWrapper>
+                <Label for="suitableForEducation">Yes</Label>
+                <RadioInput
+                  name="suitableForEducation"
+                  id="suitableForEducation"
+                  type="radio"
+                  value="Yes"
+                  ref={register({ required: true })}
+                />
+              </RadioWrapper>
+              <RadioWrapper>
+                <Label for="notSuitableForEducation">No</Label>
+                <RadioInput
+                  name="suitableForEducation"
+                  id="notSuitableForEducation"
+                  type="radio"
+                  value="No"
+                  ref={register({ required: true })}
+                />
+              </RadioWrapper>
+              {errors.suitableForEducation && (
+                <ErrorAlert>please choose an answer</ErrorAlert>
               )}
             </LabelWrapper>
             <Input type="submit" isSubmit={true} />

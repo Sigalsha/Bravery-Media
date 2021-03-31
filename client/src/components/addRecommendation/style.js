@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { fontSizes } from "../../styles/typography";
 import { colors } from "../../styles/colors";
-import { device } from "../../styles/devices";
 
 export const LabelWrapper = styled.div`
   border: transparent;
@@ -72,4 +71,13 @@ export const Textarea = styled.textarea`
 export const Divider = styled.hr`
   border: 0.5px solid ${colors.BORDER_GREY};
   margin: 0.5% 0;
+`;
+
+export const RadioWrapper = styled.div`
+  display: flex;
+  width: 10%;
+`;
+
+export const RadioInput = styled(Input)`
+  margin-left: auto;
 `;

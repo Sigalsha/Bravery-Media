@@ -1,8 +1,8 @@
 import React, { useContext, useState, useEffect } from "react";
 import axios from "axios";
+import clsx from "clsx";
 import { ResultContext } from "../../contexts/ResultContext";
 import { makeStyles } from "@material-ui/core/styles";
-import clsx from "clsx";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
@@ -11,12 +11,9 @@ import CardActions from "@material-ui/core/CardActions";
 import Collapse from "@material-ui/core/Collapse";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import { red } from "@material-ui/core/colors";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import AddCircleIcon from "@material-ui/icons/AddCircle";
-import { Container, MoreInfoIcon, ButtonText } from "./style";
-import { colors } from "../../styles/colors";
 import ResultCard from "../resultCard/ResultCard";
+import { Container } from "./style";
 
 const URL = "https://randomuser.me/api/?results=2";
 
@@ -45,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SearchResult({ item, bookData }) {
-  const { onResultClick, resultOpen } = useContext(ResultContext);
+  const { resultOpen } = useContext(ResultContext);
   const [imgData, setImageData] = useState("");
   const [resultCard, setResultCard] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
