@@ -15,7 +15,7 @@ class _Reviews:
     def insert(self, review):
         self._curr.execute("""
         INSERT INTO reviews (media_id, date, rating, review, reviewer) VALUES (%s, %s, %s, %s)
-        """, list(vars(review).values())[1:])
+        """, review.get_sorted_vars()[1:])
 
     def find_by(self, **keyvals):
         column_names = keyvals.keys()
@@ -67,7 +67,7 @@ class _Users:
     def insert(self, user):
         self._curr.execute("""
         INSERT INTO users (id, name, type) VALUES (%s, %s, %s)
-        """, list(vars(user).values()))
+        """, user.get_sorted_vars())
 
     def find_by(self, **keyvals):
         column_names = keyvals.keys()
@@ -109,7 +109,7 @@ class _Medias:
     def insert(self, media):
         self._curr.execute("""
         INSERT INTO medias (id, name , type) VALUES (%s, %s, %s)
-        """, list(vars(media).values()))
+        """, media.get_sorted_vars())
 
     def find_by(self, **keyvals):
         column_names = keyvals.keys()
@@ -151,7 +151,6 @@ class _Medias:
         return [Media(*row[:]) for row in c.fetchall()]
 
 
-
 class _BraveryMoments:
     def __init__(self, curr ):
         self._curr = curr
@@ -159,7 +158,7 @@ class _BraveryMoments:
     def insert(self, bravery_moment):
         self._curr.execute("""
         INSERT INTO braveryMoments (id, media_id , start) VALUES (%s, %s, %s)
-        """, list(vars(bravery_moment).values()))
+        """, bravery_moment.get_sorted_vars)
 
     def find_by(self, **keyvals):
         column_names = keyvals.keys()
