@@ -20,3 +20,10 @@ class Media:
         self.id = id
         self.name = name
         self.type = media_type
+
+
+class BraveryMoment:
+    def __init__(self, id, media_id, start):
+        self.id = id
+        self.media_id = media_id
+        self.start = start

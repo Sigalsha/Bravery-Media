@@ -1,4 +1,11 @@
-from Server.dbconnect.dtos import Review, User, Media
+from Server.dbconnect.dtos import Review, User, Media, BraveryMoment
+from Server.dbconnect.dbconfig import dbvalues
+
+
+# TODO remove if not used later
+def _limit_media_results(lst):
+    if len(lst) > dbvalues["media_limit"]:
+        return lst[:50]
 
 
 class _Reviews:
@@ -45,6 +52,13 @@ class _Reviews:
         """.format(col_name))
         return c.fetchone()[0]
 
+    def get_average_rating(self, media_id):
+        c = self._conn.cursor()
+        c.execute("""
+               SELECT avg(rating) FROM reviews Where media_id =?
+               """, (str(media_id)))
+        return c.fetchone()[0]
+
 
 class _Users:
     def __init__(self, conn):
@@ -60,6 +74,17 @@ class _Users:
         params = keyvals.values()
 
         stmt = 'SELECT * FROM user WHERE {}'.format(' AND '.join([col + '=?' for col in column_names]))
+
+        c = self._conn.cursor()
+        c.execute(stmt, list(params))
+        return [User(*row[:]) for row in c.fetchall()]
+
+    def limited_find_by(self, **keyvals):
+        column_names = keyvals.keys()
+        params = keyvals.values()
+
+        stmt = 'SELECT * FROM user WHERE {} LIMIT {}'.format(' AND '.join([col + '=?' for col in column_names]),
+                                                             dbvalues["media_limit"])
 
         c = self._conn.cursor()
         c.execute(stmt, list(params))
@@ -113,4 +138,44 @@ class _Medias:
         SELECT SUM({}) FROM medias
         """.format(col_name))
         return c.fetchone()[0]
+
+
+class _BraveryMoments:
+    def __init__(self, conn):
+        self._conn = conn
+
+    def insert(self, bravery_moment):
+        self._conn.execute("""
+        INSERT INTO braveryMoments (id, media_id , start) VALUES (?, ?, ?)
+        """, list(vars(bravery_moment).values()))
+
+    def find_by(self, **keyvals):
+        column_names = keyvals.keys()
+        params = keyvals.values()
+
+        stmt = 'SELECT * FROM braveryMoments WHERE {}'.format(' AND '.join([col + '=?' for col in column_names]))
+
+        c = self._conn.cursor()
+        c.execute(stmt, list(params))
+        return [BraveryMoment(*row[:]) for row in c.fetchall()]
+
+    def delete(self, id):
+        self._conn.execute("""
+                DELETE FROM braveryMoments WHERE id=?
+                """, (str(id)))
+
+    def update(self, id, **keyvals):
+        column_names = keyvals.keys()
+        params = keyvals.values()
+        stmt = 'Update braveryMoments SET {} WHERE id={}'.format(' AND '.join([col + '=?' for col in column_names]), id)
+        self._conn.execute(stmt, list(params))
+
+    def sum_column(self, col_name):
+        c = self._conn.cursor()
+        c.execute("""
+        SELECT SUM({}) FROM braveryMoments
+        """.format(col_name))
+        return c.fetchone()[0]
+
+
 
