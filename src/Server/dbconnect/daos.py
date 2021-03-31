@@ -15,7 +15,7 @@ class _Reviews:
     def insert(self, review):
         self._conn.execute("""
         INSERT INTO reviews (media_id, date, rating, review, reviewer) VALUES (?, ?, ?, ?, ?)
-        """, list(vars(review).values())[1:])
+        """, review.get_sorted_vars()[1:])
 
     def find_by(self, **keyvals):
         column_names = keyvals.keys()
@@ -67,7 +67,7 @@ class _Users:
     def insert(self, user):
         self._conn.execute("""
         INSERT INTO users (name, type) VALUES (?, ?)
-        """, list(vars(user).values()))
+        """, user.get_sorted_vars())
 
     def find_by(self, **keyvals):
         column_names = keyvals.keys()
@@ -109,7 +109,7 @@ class _Medias:
     def insert(self, media):
         self._conn.execute("""
         INSERT INTO medias (id, name , type) VALUES (?, ?, ?)
-        """, list(vars(media).values()))
+        """, media.get_sorted_vars())
 
     def find_by(self, **keyvals):
         column_names = keyvals.keys()
@@ -159,7 +159,7 @@ class _BraveryMoments:
     def insert(self, bravery_moment):
         self._conn.execute("""
         INSERT INTO braveryMoments (media_id , start) VALUES ( ?, ?)
-        """, list(vars(bravery_moment).values()))
+        """, bravery_moment.get_sorted_vars())
 
     def find_by(self, **keyvals):
         column_names = keyvals.keys()
