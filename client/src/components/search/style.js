@@ -7,7 +7,7 @@ import SearchIcon from "@material-ui/icons/Search";
 export const SearchContainer = styled.div`
   width: 25%;
   margin: 2%;
-  display: flex;
+  display: ${({ resultOpen }) => (resultOpen ? "none" : "flex")};
   align-items: center;
   justify-content: space-around;
   background-color: ${colors.LIGHT_GREY};

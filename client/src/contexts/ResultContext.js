@@ -3,14 +3,14 @@ import React, { createContext, useState } from "react";
 export const ResultContext = createContext();
 
 const ResultContextProvider = (props) => {
-  const [open, setOpen] = useState(false);
+  const [resultOpen, setResultOpen] = useState(false);
 
   const onResultClick = () => {
-    setOpen(!open);
+    setResultOpen(!resultOpen);
   };
 
   return (
-    <ResultContext.Provider value={{ open, onResultClick }}>
+    <ResultContext.Provider value={{ resultOpen, onResultClick }}>
       {props.children}
     </ResultContext.Provider>
   );

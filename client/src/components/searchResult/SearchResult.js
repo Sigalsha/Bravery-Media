@@ -13,8 +13,12 @@ import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import { red } from "@material-ui/core/colors";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import AddCircleIcon from "@material-ui/icons/AddCircle";
+import { Container, MoreInfoIcon, ButtonText } from "./style";
+import { colors } from "../../styles/colors";
+import ResultCard from "../resultCard/ResultCard";
 
-const URL = "https://randomuser.me/api/?results=5";
+const URL = "https://randomuser.me/api/?results=2";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,14 +42,11 @@ const useStyles = makeStyles((theme) => ({
   expandOpen: {
     transform: "rotate(180deg)",
   },
-  avatar: {
-    backgroundColor: red[500],
-  },
 }));
 
-export default function SearchResult({ item }) {
-  const { onResultClick, open } = useContext(ResultContext);
-  const [data, setData] = useState([]);
+export default function SearchResult({ item, bookData }) {
+  const { onResultClick, resultOpen } = useContext(ResultContext);
+  const [imgData, setImageData] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   console.log(item);
 
@@ -61,8 +62,8 @@ export default function SearchResult({ item }) {
       try {
         setIsLoading(true);
         const result = await axios(URL);
-        setData(result.data.results[0].picture.thumbnail);
-        console.log(result.data.results[0].picture.thumbnail);
+        setImageData(result.data.results[0].picture.medium);
+        console.log("data as img: ", imgData);
         setIsLoading(false);
       } catch (err) {
         console.log("err: ", err);
@@ -74,50 +75,66 @@ export default function SearchResult({ item }) {
   }, []);
 
   return (
-    <Card className={classes.root} open={open}>
-      <CardHeader title={item.title} />
-      {!isLoading && data && (
-        <CardMedia className={classes.media} image={data} title={item.title} />
-      )}
-      <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-          Type: {item.type}
-        </Typography>
-        <Typography variant="body2" color="textSecondary" component="p">
-          Creator: {item.creator}
-        </Typography>
+    <div>
+      <Container>
+        <Card className={classes.root}>
+          <CardHeader title={item.title} />
+          {!isLoading && imgData && (
+            <CardMedia
+              className={classes.media}
+              image={imgData}
+              title={item.title}
+            />
+          )}
+          <CardContent>
+            <Typography variant="body2" color="textSecondary" component="p">
+              Type: {item.type}
+            </Typography>
+            {item.creator && (
+              <Typography variant="body2" color="textSecondary" component="p">
+                Creator: {item.creator}
+              </Typography>
+            )}
 
-        {item.braveryRate ? (
-          <Typography variant="body2" color="textSecondary" component="p">
-            Bravery Rate: {item.braveryRate}
-          </Typography>
-        ) : (
-          <Typography variant="body2" color="textSecondary" component="p">
-            Bravery Rate: Be the first one to rate!
-          </Typography>
-        )}
-      </CardContent>
-      <CardActions disableSpacing>
-        {/* <IconButton onClick={} /> */}
-        <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-          <Typography>Plot</Typography>
-        </IconButton>
-      </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          <Typography paragraph style={{ fontSize: "14px" }}>
-            {item.plot}
-          </Typography>
-        </CardContent>
-      </Collapse>
-    </Card>
+            {item.braveryRate ? (
+              <Typography variant="body2" color="textSecondary" component="p">
+                Bravery Rate: {item.braveryRate}
+              </Typography>
+            ) : (
+              <Typography variant="body2" color="textSecondary" component="p">
+                Bravery Rate: Be the first one to rate!
+              </Typography>
+            )}
+          </CardContent>
+          <CardActions disableSpacing>
+            <MoreInfoIcon onClick={() => onResultClick()}>
+              <ButtonText>More info</ButtonText>
+              <AddCircleIcon style={{ color: `${colors.MAIN_BLUE}` }} />
+            </MoreInfoIcon>
+            <IconButton
+              className={clsx(classes.expand, {
+                [classes.expandOpen]: expanded,
+              })}
+              onClick={handleExpandClick}
+              aria-expanded={expanded}
+              aria-label="show more"
+            >
+              <ExpandMoreIcon />
+              <Typography>Plot</Typography>
+            </IconButton>
+          </CardActions>
+          <Collapse in={expanded} timeout="auto" unmountOnExit>
+            <CardContent>
+              <Typography paragraph style={{ fontSize: "14px" }}>
+                {item.plot}
+              </Typography>
+            </CardContent>
+          </Collapse>
+        </Card>
+      </Container>
+      {resultOpen && (
+        <ResultCard item={item} resultOpen={resultOpen} bookData={bookData} />
+      )}
+    </div>
   );
 }

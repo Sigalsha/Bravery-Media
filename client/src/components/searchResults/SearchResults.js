@@ -3,13 +3,13 @@ import { ResultContext } from "../../contexts/ResultContext";
 import { Grid, Item } from "./style";
 import SearchResult from "../searchResult/SearchResult";
 
-const SearchResults = ({ searchResults }) => {
-  const { onResultClick, open } = useContext(ResultContext);
+const SearchResults = ({ searchResults, bookData }) => {
+  const { onResultClick, resultOpen } = useContext(ResultContext);
 
   return (
-    <Grid open={open}>
+    <Grid>
       {searchResults.map((item) => (
-        <SearchResult item={item} />
+        <SearchResult item={item} key={item.id} bookData={bookData} />
       ))}
     </Grid>
   );
@@ -17,8 +17,9 @@ const SearchResults = ({ searchResults }) => {
 
 export default SearchResults;
 
-{
-  /* <Item key={item.id} open={open} onClick={onResultClick}>
+// resultOpen={resultOpen}
+
+/* <Item key={item.id} open={open} onClick={onResultClick}>
   <p>
     name:{item.title}
     <br />
@@ -29,4 +30,3 @@ export default SearchResults;
     {item.plot}
   </p>
 </Item>; */
-}

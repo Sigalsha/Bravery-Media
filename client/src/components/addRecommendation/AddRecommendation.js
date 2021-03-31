@@ -83,7 +83,7 @@ export default function AddRecommendation({ item }) {
             color: `${colors.DARK_BLUE}`,
           }}
         >
-          Recommend "{item.title}" by {item.creator}
+          Recommend the {item.type} "{item.title}"
         </DialogTitle>
         <DialogContent>
           <form onSubmit={handleSubmit(onSubmit)}>

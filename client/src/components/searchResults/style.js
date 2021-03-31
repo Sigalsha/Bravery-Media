@@ -13,10 +13,9 @@ export const Item = styled.div`
 //
 
 export const Grid = styled.div`
-  display: grid;
+  display: ${({ resultOpen }) => (resultOpen ? "none" : "grid")};
   width: 90%;
   padding-left: 10%;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 5px;
 `;
-// display: ${({ open }) => (open ? "none" : "grid")};
