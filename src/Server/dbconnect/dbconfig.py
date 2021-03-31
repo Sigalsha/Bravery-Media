@@ -1,7 +1,7 @@
 dbvalues = {"media_limit": 50
 }
 
-table_names = ["users", "medias", "reviews", "braveryMoments"]
+table_names = ["bm_users", "bm_reviews", "bm_braveryMoments", "bm_medias"]
 
 # remote_db_hostname = "3.11.130.180"
 # remote_db_hostname = "bravery-db.coa0lr6zcfk6.eu-west-2.rds.amazonaws.com"

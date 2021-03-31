@@ -27,34 +27,34 @@ class _Repository:
 
     def create_tables(self):
         self.cursor.execute("""
-        CREATE TABLE IF NOT EXISTS users(
+        CREATE TABLE IF NOT EXISTS bm_users(
         id INTEGER PRIMARY KEY,
         username TEXT NOT NULL,
         type TEXT NOT NULL
         );""")
         self.cursor.execute("""
-        CREATE TABLE IF NOT EXISTS reviews(
-        id INTEGER PRIMARY KEY,
-        media_id INTEGER NOT NULL,
-        review TEXT NOT NULL,
-        reviewer INTEGER NOT NULL,
-        date DATE NOT NULL,
-        rating INTEGER NOT NULL,
-        FOREIGN KEY(reviewer) REFERENCES users(id),
-        FOREIGN KEY(media_id) REFERENCES media(id)
-        );""")
-        self.cursor.execute("""
-        CREATE TABLE IF NOT EXISTS medias(
+        CREATE TABLE IF NOT EXISTS bm_medias(
         id INTEGER PRIMARY KEY,
         name TEXT NOT NULL,
         type TEXT NOT NULL
         );""")
         self.cursor.execute("""
-        CREATE TABLE IF NOT EXISTS braveryMoments(
-        id INTEGER PRIMARY KEY,
+        CREATE TABLE IF NOT EXISTS bm_reviews(
+        id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        media_id INTEGER NOT NULL,
+        review TEXT NOT NULL,
+        reviewer INTEGER NOT NULL,
+        date DATE NOT NULL,
+        rating INTEGER NOT NULL,
+        FOREIGN KEY(media_id) REFERENCES bm_medias(id)
+        
+        );""")
+        self.cursor.execute("""
+        CREATE TABLE IF NOT EXISTS bm_braveryMoments(
+        id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
         media_id INTEGER NOT NULL,
         start INTEGER NOT NULL,
-        FOREIGN KEY(media_id) REFERENCES media(id)
+        FOREIGN KEY(media_id) REFERENCES bm_medias(id)
         );
         """)
 
@@ -62,7 +62,6 @@ class _Repository:
         for table_name in config.table_names:
             self.cursor.execute("""
                     DROP TABLE IF EXISTS {}
-                    );
                     """.format(table_name))
 
 

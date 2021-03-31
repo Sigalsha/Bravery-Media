@@ -14,7 +14,7 @@ class _Reviews:
 
     def insert(self, review):
         self._curr.execute("""
-        INSERT INTO reviews (media_id, date, rating, review, reviewer) VALUES (%s, %s, %s, %s)
+        INSERT INTO bm_reviews (media_id, date, rating, review, reviewer) VALUES (%s, %s, %s, %s, %s)
 
         """, review.get_sorted_vars()[1:])
 
@@ -22,7 +22,7 @@ class _Reviews:
         column_names = keyvals.keys()
         params = keyvals.values()
 
-        stmt = 'SELECT * FROM reviews WHERE {}'.format(' AND '.join([col + '=%s' for col in column_names]))
+        stmt = 'SELECT * FROM bm_reviews WHERE {}'.format(' AND '.join([col + '=%s' for col in column_names]))
 
         c = self._curr
         c.execute(stmt, list(params))
@@ -30,33 +30,33 @@ class _Reviews:
 
     def delete(self, id):
         self._curr.execute("""
-                DELETE FROM reviews WHERE id=%s
+                DELETE FROM bm_reviews WHERE id=%s
                 """, (str(id)))
 
     def update(self, id, **keyvals):
         column_names = keyvals.keys()
         params = keyvals.values()
-        stmt = 'Update reviews SET {} WHERE id={}'.format(' AND '.join([col + '=%s' for col in column_names]), id)
+        stmt = 'Update bm_reviews SET {} WHERE id={}'.format(' AND '.join([col + '=%s' for col in column_names]), id)
         self._conn.execute(stmt, list(params))
 
     def get_reviews_by_date(self):
         c = self._curr
         c.execute("""
-        SELECT * FROM reviews ORDER BY date ASC
+        SELECT * FROM bm_reviews ORDER BY date ASC
         """)
         return [Review(*row[1:], row[0]) for row in c.fetchall()]
 
     def sum_column(self, col_name):
         c = self._curr
         c.execute("""
-        SELECT SUM({}) FROM reviews
+        SELECT SUM({}) FROM bm_reviews
         """.format(col_name))
         return c.fetchone()[0]
 
     def get_average_rating(self, media_id):
         c = self._curr
         c.execute("""
-               SELECT avg(rating) FROM reviews Where media_id ={}
+               SELECT avg(rating) FROM bm_reviews Where media_id ={}
                """.format(media_id))
         return c.fetchone()[0]
 
@@ -67,14 +67,14 @@ class _Users:
 
     def insert(self, user):
         self._curr.execute("""
-        INSERT INTO users (name, type) VALUES (%s, %s)
+        INSERT INTO bm_users (name, type) VALUES (%s, %s)
         """, user.get_sorted_vars()[1:])
 
     def find_by(self, **keyvals):
         column_names = keyvals.keys()
         params = keyvals.values()
 
-        stmt = 'SELECT * FROM user WHERE {}'.format(' AND '.join([col + '=%s' for col in column_names]))
+        stmt = 'SELECT * FROM bm_users WHERE {}'.format(' AND '.join([col + '=%s' for col in column_names]))
 
         c = self._curr
         c.execute(stmt, list(params))
@@ -84,7 +84,7 @@ class _Users:
         column_names = keyvals.keys()
         params = keyvals.values()
 
-        stmt = 'SELECT * FROM users WHERE {} LIMIT {}'.format(' AND '.join([col + '=%s' for col in column_names]),
+        stmt = 'SELECT * FROM bm_users WHERE {} LIMIT {}'.format(' AND '.join([col + '=%s' for col in column_names]),
                                                              dbvalues["media_limit"])
 
         c = self._curr
@@ -93,13 +93,13 @@ class _Users:
 
     def delete(self, id):
         self._curr.execute("""
-                DELETE FROM users WHERE id=%s
+                DELETE FROM bm_users WHERE id=%s
                 """, (str(id)))
 
     def update(self, id, **keyvals):
         column_names = keyvals.keys()
         params = keyvals.values()
-        stmt = 'Update users SET {} WHERE id={}'.format(' AND '.join([col + '=%s' for col in column_names]), id)
+        stmt = 'Update bm_users SET {} WHERE id={}'.format(' AND '.join([col + '=%s' for col in column_names]), id)
         self._curr.execute(stmt, list(params))
 
 
@@ -109,14 +109,14 @@ class _Medias:
 
     def insert(self, media):
         self._curr.execute("""
-        INSERT INTO medias (id, name , type) VALUES (%s, %s, %s)
+        INSERT INTO bm_medias (id, name , type) VALUES (%s, %s, %s)
         """, media.get_sorted_vars())
 
     def find_by(self, **keyvals):
         column_names = keyvals.keys()
         params = keyvals.values()
 
-        stmt = "SELECT * FROM medias WHERE {}".format(' AND '.join([col + '=%s' for col in column_names]))
+        stmt = "SELECT * FROM bm_medias WHERE {}".format(' AND '.join([col + '=%s' for col in column_names]))
 
         c = self._curr
         c.execute(stmt, list(params))
@@ -124,19 +124,19 @@ class _Medias:
 
     def delete(self, id):
         self._curr.execute("""
-                DELETE FROM medias WHERE id=%s
+                DELETE FROM bm_medias WHERE id=%s
                 """, (str(id)))
 
     def update(self, id, **keyvals):
         column_names = keyvals.keys()
         params = keyvals.values()
-        stmt = 'Update medias SET {} WHERE id={}'.format(' AND '.join([col + '=%s' for col in column_names]), id)
+        stmt = 'Update bm_medias SET {} WHERE id={}'.format(' AND '.join([col + '=%s' for col in column_names]), id)
         self._curr.execute(stmt, list(params))
 
     def sum_column(self, col_name):
         c = self._curr
         c.execute("""
-        SELECT SUM({}) FROM medias
+        SELECT SUM({}) FROM bm.medias
         """.format(col_name))
         return c.fetchone()[0]
 
@@ -144,7 +144,7 @@ class _Medias:
         column_names = keyvals.keys()
         params = keyvals.values()
 
-        stmt = 'SELECT * FROM medias WHERE {} LIMIT {}'.format(' AND '.join([col + '=%s' for col in column_names]),
+        stmt = 'SELECT * FROM bm_medias WHERE {} LIMIT {}'.format(' AND '.join([col + '=%s' for col in column_names]),
                                                              dbvalues["media_limit"])
 
         c = self._curr
@@ -158,14 +158,14 @@ class _BraveryMoments:
 
     def insert(self, bravery_moment):
         self._curr.execute("""
-        INSERT INTO braveryMoments (media_id , start) VALUES (%s, %s)
+        INSERT INTO bm_braveryMoments (media_id , start) VALUES (%s, %s)
         """, bravery_moment.get_sorted_vars()[1:])
 
     def find_by(self, **keyvals):
         column_names = keyvals.keys()
         params = keyvals.values()
 
-        stmt = 'SELECT * FROM braveryMoments WHERE {}'.format(' AND '.join([col + '=%s' for col in column_names]))
+        stmt = 'SELECT * FROM bm_braveryMoments WHERE {}'.format(' AND '.join([col + '=%s' for col in column_names]))
 
         c = self._curr
         c.execute(stmt, list(params))
@@ -173,19 +173,19 @@ class _BraveryMoments:
 
     def delete(self, id):
         self._curr.execute("""
-                DELETE FROM braveryMoments WHERE id=%s
+                DELETE FROM bm_braveryMoments WHERE id=%s
                 """, (str(id)))
 
     def update(self, id, **keyvals):
         column_names = keyvals.keys()
         params = keyvals.values()
-        stmt = 'Update braveryMoments SET {} WHERE id={}'.format(' AND '.join([col + '=%s' for col in column_names]), id)
+        stmt = 'Update bm_braveryMoments SET {} WHERE id={}'.format(' AND '.join([col + '=%s' for col in column_names]), id)
         self._curr.execute(stmt, list(params))
 
     def sum_column(self, col_name):
         c = self._curr
         c.execute("""
-        SELECT SUM({}) FROM braveryMoments
+        SELECT SUM({}) FROM bm_braveryMoments
         """.format(col_name))
         return c.fetchone()[0]
 

@@ -1,4 +1,4 @@
-from Server.dbconnect.repository import repo
+from Server.dbconnect.mysql_repository import repo
 from Server.dbconnect.daos import *
 from Server.dbconnect import imdb_conn
 import datetime
@@ -14,7 +14,10 @@ def search_by_type(item_type, keywords):
 
 def get_item_info(item_id):
     data = {}
-    media = repo.media.find_by(id=item_id)[0]
+    media_list = repo.media.find_by(id=item_id)
+    if not media_list:
+        return data
+    media = media_list[0]
     if media.media_type == "movie":
         movie_list = imdb_conn.search(media.name)
         for movie in movie_list:
