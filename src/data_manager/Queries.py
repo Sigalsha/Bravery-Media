@@ -1,6 +1,6 @@
 from Server.dbconnect.mysql_repository import repo
 from Server.dbconnect.daos import *
-from Server.dbconnect import imdb_conn
+from Server.dbconnect.movies import imdb_conn
 import datetime
 
 
@@ -64,7 +64,7 @@ def _add_bravery_rate(movie_id, data):
     rate = repo.reviews.get_average_rating(movie_id)
     if not rate:
         rate = "null"
-    data['braveryRate'] = rate
+    data['braveryRate'] = str(rate)
 
 
 def _add_heroism_moments(movie_id, data):

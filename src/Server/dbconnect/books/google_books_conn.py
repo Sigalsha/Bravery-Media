@@ -71,6 +71,16 @@ def score_results(books, keyword):
         book['score'] = score
 
 
+def get_book(book_id):
+    params = {'key': config.get['google_api_key']}
+    request = requests.get(url=config.get['get_book_url'].format(book_id), params=params)
+    result = json.loads(json.dumps(request.json()))
+    if 'error' in result:
+        raise Exception("Book id not found in Google Books API!")
+    result['score'] = 0
+    return dict_to_obj(result)
+
+
 def dict_to_obj(book):
     authors = ""
     if 'authors' in book['volumeInfo']:
