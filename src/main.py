@@ -1,5 +1,5 @@
-#from Server.dbconnect.repository import repo
-from Server.dbconnect.mysql_repository import repo
+from Server.dbconnect.repository import repo
+# from Server.dbconnect.mysql_repository import repo
 from Server.dbconnect.daos import *
 from Server.dbconnect import imdb_conn
 
