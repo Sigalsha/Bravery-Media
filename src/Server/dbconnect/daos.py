@@ -55,8 +55,8 @@ class _Reviews:
     def get_average_rating(self, media_id):
         c = self._conn.cursor()
         c.execute("""
-               SELECT avg(rating) FROM reviews Where media_id =?
-               """, (str(media_id),))
+               SELECT avg(rating) FROM reviews Where media_id ={}
+               """.format(media_id))
         return c.fetchone()[0]
 
 
@@ -159,7 +159,7 @@ class _BraveryMoments:
     def insert(self, bravery_moment):
         self._conn.execute("""
         INSERT INTO braveryMoments (media_id , start) VALUES ( ?, ?)
-        """, bravery_moment.get_sorted_vars())
+        """, bravery_moment.get_sorted_vars()[1:])
 
     def find_by(self, **keyvals):
         column_names = keyvals.keys()
